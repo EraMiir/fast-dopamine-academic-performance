@@ -24,7 +24,7 @@ fast-dopamine-academic-performance/
 │   └── config.yaml          # Experiment parameters & feature definitions
 ├── data/
 │   └── sample/
-│       └── sample_data.csv  # Test dataset sample for pipeline verification
+│       └── survey.csv       # Primary survey dataset for pipeline execution
 ├── src/
 │   └── benchmark.py         # Executable validation and test script
 ├── .gitignore               # Excludes sensitive data, caches, and checkpoints
@@ -32,9 +32,8 @@ fast-dopamine-academic-performance/
 ├── requirements.txt         # Pinned dependency manifest
 └── README.md                # Project documentation
 ```
-Quickstart & Reproducibility Guide
-Follow these steps to set up the environment and run the verification script:
 
+Quickstart & Reproducibility Guide
 # 1. Clone the repository
 git clone [https://github.com/EraMiir/fast-dopamine-academic-performance.git](https://github.com/EraMiir/fast-dopamine-academic-performance.git)
 cd fast-dopamine-academic-performance
@@ -52,4 +51,3 @@ python src/benchmark.py
 
 Citation & License
 Licensed under the MIT License.
-
