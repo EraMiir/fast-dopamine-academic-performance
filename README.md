@@ -35,19 +35,19 @@ fast-dopamine-academic-performance/
 
 ## Quickstart & Reproducibility Guide
 
-# 1. Clone the repository
+1. Clone the repository
 git clone [https://github.com/EraMiir/fast-dopamine-academic-performance.git](https://github.com/EraMiir/fast-dopamine-academic-performance.git)
 cd fast-dopamine-academic-performance
 
-# 2. Create and activate a virtual environment
+2. Create and activate a virtual environment
 python -m venv venv
-# On Windows use: venv\Scripts\activate
-# On macOS/Linux use: source venv/bin/activate
+`On Windows use: venv\Scripts\activate`
+`On macOS/Linux use: source venv/bin/activate`
 
-# 3. Install dependencies
+3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run the benchmark script
+4. Run the benchmark script
 python src/benchmark.py
 
 
