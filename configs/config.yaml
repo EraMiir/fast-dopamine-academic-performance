@@ -4,15 +4,20 @@ random_seed: 42
 model_params:
   test_size: 0.2
   cv_folds: 5
-  target_col: "gpa"
+  target_col: "Last Academic Result (GPA/CGPA)"
 
 features:
   domains:
-    - screen_profile (X1-X4)
-    - gaming_circadian (X5-X8)
-    - attention_fragmentation (X9-X11)
+    screen_profile:
+      - "Time spent in social media (hours)"
+      - "Social Media Platform"
+    gaming_circadian:
+      - "Most time spent in a day"
+      - "Sleep Disturbance on Sleep Quality"
+    attention_fragmentation:
+      - "Social Media Distraction During Academic Activities "
+      - "Withdrawal symptoms (Side effects of not using social media)"
   control_variables:
-    - course (Z1)
-    - employment (Z2)
-    - attendance (Z3)
-    - prior_gpa (Z4)
+    course: "Education Level"
+    attendance: "Attendance rate (In Percentile)"
+    study_time: "Study time (In Hours)"
