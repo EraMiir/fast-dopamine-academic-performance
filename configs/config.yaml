@@ -1,0 +1,18 @@
+experiment_name: "fast-dopamine-academic-performance"
+random_seed: 42
+
+model_params:
+  test_size: 0.2
+  cv_folds: 5
+  target_col: "gpa"
+
+features:
+  domains:
+    - screen_profile (X1-X4)
+    - gaming_circadian (X5-X8)
+    - attention_fragmentation (X9-X11)
+  control_variables:
+    - course (Z1)
+    - employment (Z2)
+    - attendance (Z3)
+    - prior_gpa (Z4)
