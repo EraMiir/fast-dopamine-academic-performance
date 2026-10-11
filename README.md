@@ -34,6 +34,7 @@ fast-dopamine-academic-performance/
 ```
 
 Quickstart & Reproducibility Guide
+
 # 1. Clone the repository
 git clone [https://github.com/EraMiir/fast-dopamine-academic-performance.git](https://github.com/EraMiir/fast-dopamine-academic-performance.git)
 cd fast-dopamine-academic-performance
@@ -48,6 +49,7 @@ pip install -r requirements.txt
 
 # 4. Run the benchmark script
 python src/benchmark.py
+
 
 Citation & License
 Licensed under the MIT License.
