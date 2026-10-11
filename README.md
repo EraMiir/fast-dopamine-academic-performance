@@ -31,7 +31,7 @@ fast-dopamine-academic-performance/
 ├── LICENSE                  # MIT Open Access License
 ├── requirements.txt         # Pinned dependency manifest
 └── README.md                # Project documentation
-
+```
 Quickstart & Reproducibility Guide
 Follow these steps to set up the environment and run the verification script:
 
