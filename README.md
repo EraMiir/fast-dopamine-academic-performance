@@ -1,6 +1,9 @@
 # Predicting Student Academic Performance (GPA/CGPA) Based on Social Media Usage Patterns and Psychometric Indicators
 
-**Authors:** [Your Name / Partner's Name]  
+**Authors:** Miir Yerassyl , Sharap Alislam 
+
+**Repository:** `https://github.com/EraMiir/fast-dopamine-academic-performance`
+
 **Course / Assignment:** Task 2 — Methodology Passport & Benchmarking Repository
 
 ---
