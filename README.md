@@ -35,6 +35,13 @@ This repository contains the reproducible benchmarking pipeline for evaluating m
 └── README.md                     # Project documentation and Quickstart guide
 ```
 
+## 3. Planned Benchmarks & Metrics Matrix
+|Model / Condition|Feature Set|Primary Metric|Secondary Metrics|Guardrail Metrics|
+|---|---|---|---|---|
+|Baseline: Ridge Regression ($\alpha=1.0$)|Academic + Social Media + Psychometric|RMSE|$MAE$, $R^2$|Latency $\le 2000\text{ ms}$, RAM $\le 256\text{ MB}$|
+|Random Forest Regressor|Academic + Social Media + Psychometric|RMSE|$MAE$, $R^2$|Latency $\le 2000\text{ ms}$, RAM $\le 256\text{ MB}$|
+|Gradient Boosting Regressor|Academic + Social Media + Psychometric|RMSE|$MAE$, $R^2$|Latency $\le 2000\text{ ms}$, RAM $\le 256\text{ MB}$|
+
 ### Run via Docker (100% Reproducible)
 docker build -t gpa-benchmark .
 docker run --rm gpa-benchmark
