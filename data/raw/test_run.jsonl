@@ -1,0 +1,17 @@
+{"run_id": 0, "phase": "warmup", "iteration": 0, "model": "Baseline_Ridge", "sample_size": 64, "RMSE": 0.3691, "MAE": 0.2912, "R2": 0.1421, "latency_ms": 2.315, "ram_mb": 148.2, "error_rate": 0.0}
+{"run_id": 1, "phase": "warmup", "iteration": 1, "model": "Baseline_Ridge", "sample_size": 128, "RMSE": 0.3540, "MAE": 0.2810, "R2": 0.1850, "latency_ms": 2.410, "ram_mb": 148.5, "error_rate": 0.0}
+{"run_id": 2, "phase": "warmup", "iteration": 2, "model": "Baseline_Ridge", "sample_size": 256, "RMSE": 0.3405, "MAE": 0.2791, "R2": 0.2110, "latency_ms": 2.421, "ram_mb": 148.8, "error_rate": 0.0}
+{"run_id": 3, "phase": "evaluation", "iteration": 3, "model": "Baseline_Ridge", "sample_size": 64, "RMSE": 0.3618, "MAE": 0.2890, "R2": 0.1650, "latency_ms": 0.985, "ram_mb": 148.9, "error_rate": 0.0}
+{"run_id": 4, "phase": "evaluation", "iteration": 4, "model": "Baseline_Ridge", "sample_size": 128, "RMSE": 0.3512, "MAE": 0.2804, "R2": 0.1980, "latency_ms": 0.992, "ram_mb": 149.0, "error_rate": 0.0}
+{"run_id": 5, "phase": "evaluation", "iteration": 5, "model": "Baseline_Ridge", "sample_size": 192, "RMSE": 0.3254, "MAE": 0.2651, "R2": 0.2340, "latency_ms": 1.012, "ram_mb": 149.1, "error_rate": 0.0}
+{"run_id": 6, "phase": "evaluation", "iteration": 6, "model": "Baseline_Ridge", "sample_size": 256, "RMSE": 0.3338, "MAE": 0.2719, "R2": 0.2415, "latency_ms": 1.018, "ram_mb": 149.2, "error_rate": 0.0}
+{"run_id": 7, "phase": "warmup", "iteration": 0, "model": "GradientBoosting", "sample_size": 256, "RMSE": 0.3213, "MAE": 0.2399, "R2": 0.3120, "latency_ms": 128.821, "ram_mb": 151.4, "error_rate": 0.0}
+{"run_id": 8, "phase": "evaluation", "iteration": 3, "model": "GradientBoosting", "sample_size": 64, "RMSE": 0.3498, "MAE": 0.2640, "R2": 0.2210, "latency_ms": 62.140, "ram_mb": 151.6, "error_rate": 0.0}
+{"run_id": 9, "phase": "evaluation", "iteration": 4, "model": "GradientBoosting", "sample_size": 128, "RMSE": 0.3291, "MAE": 0.2495, "R2": 0.2890, "latency_ms": 65.412, "ram_mb": 151.8, "error_rate": 0.0}
+{"run_id": 10, "phase": "evaluation", "iteration": 5, "model": "GradientBoosting", "sample_size": 192, "RMSE": 0.2968, "MAE": 0.2261, "R2": 0.3580, "latency_ms": 72.145, "ram_mb": 152.0, "error_rate": 0.0}
+{"run_id": 11, "phase": "evaluation", "iteration": 6, "model": "GradientBoosting", "sample_size": 256, "RMSE": 0.2918, "MAE": 0.2224, "R2": 0.3840, "latency_ms": 75.590, "ram_mb": 152.1, "error_rate": 0.0}
+{"run_id": 12, "phase": "warmup", "iteration": 0, "model": "RandomForest", "sample_size": 256, "RMSE": 0.3280, "MAE": 0.2526, "R2": 0.2950, "latency_ms": 263.132, "ram_mb": 153.2, "error_rate": 0.0}
+{"run_id": 13, "phase": "evaluation", "iteration": 3, "model": "RandomForest", "sample_size": 64, "RMSE": 0.3285, "MAE": 0.2580, "R2": 0.2740, "latency_ms": 126.420, "ram_mb": 153.5, "error_rate": 0.0}
+{"run_id": 14, "phase": "evaluation", "iteration": 4, "model": "RandomForest", "sample_size": 128, "RMSE": 0.3246, "MAE": 0.2512, "R2": 0.3015, "latency_ms": 130.815, "ram_mb": 153.8, "error_rate": 0.0}
+{"run_id": 15, "phase": "evaluation", "iteration": 5, "model": "RandomForest", "sample_size": 192, "RMSE": 0.2935, "MAE": 0.2341, "R2": 0.3790, "latency_ms": 137.914, "ram_mb": 154.0, "error_rate": 0.0}
+{"run_id": 16, "phase": "evaluation", "iteration": 6, "model": "RandomForest", "sample_size": 256, "RMSE": 0.2866, "MAE": 0.2311, "R2": 0.4085, "latency_ms": 142.194, "ram_mb": 154.2, "error_rate": 0.0}
