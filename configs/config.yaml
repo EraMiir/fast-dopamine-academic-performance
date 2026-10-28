@@ -1,38 +1,26 @@
-experiment_name: "student_gpa_social_media_benchmark"
-random_seed: 42
-test_size: 0.2
-timeout_seconds: 30
+experiment:
+  name: "fast-dopamine-academic-performance"
+  seed: 42
+  warmup_runs: 3
+  eval_runs: 20
+  sample_sizes: [64, 128, 192, 256]
+  test_size: 0.2
+  bootstrap_iterations: 2000
+  confidence_level: 0.95
 
 paths:
-  sample_data: "data/sample/sample_survey.csv"
-  full_data: "data/cleaned_survey.csv"
-  output_log: "logs/benchmark_results.json"
-
-features:
-  target: "Last Academic Result (GPA/CGPA)"
-  numeric_features:
-    - "Age"
-    - "Study time (In Hours)"
-    - "Attendance rate (In Percentile)"
-    - "Time spent in social media (hours)"
-    - "Sleep Disturbance on Sleep Quality"
-    - "Mood Modification Scale"
-    - "Anxiety Scale "
-    - "Depression Scale"
-    - "Self-esteem Scale"
-    - "Social Media Distraction During Academic Activities "
+  dataset: "data/cleaned_survey.csv"
+  raw_logs: "data/raw/test_run.jsonl"
+  summary_csv: "data/processed/metrics_summary.csv"
+  figures_dir: "results/figures"
 
 models:
-  baseline_ridge:
+  Ridge:
     alpha: 1.0
-  random_forest:
+  Random Forest:
     n_estimators: 100
-    max_depth: 5
-  gradient_boosting:
+    max_depth: 6
+  Gradient Boosting:
     n_estimators: 100
-    learning_rate: 0.05
+    learning_rate: 0.08
     max_depth: 3
-
-guardrails:
-  max_latency_ms: 2000.0
-  max_ram_mb: 256.0
