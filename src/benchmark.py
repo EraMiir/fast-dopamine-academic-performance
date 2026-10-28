@@ -1,183 +1,178 @@
 import argparse
 import json
+import os
+import sys
 import time
-import tracemalloc
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
-import yaml
-from sklearn.dummy import DummyRegressor
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from pathlib import Path
 from sklearn.linear_model import Ridge
-from sklearn.metrics import root_mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 
-def ensure_dataset(dataset_path: Path, seed: int = 42) -> pd.DataFrame:
-    if dataset_path.exists():
-        df = pd.read_csv(dataset_path)
-        if len(df) >= 256:
-            return df.iloc[:256].reset_index(drop=True)
-
-    dataset_path.parent.mkdir(parents=True, exist_ok=True)
-    rng = np.random.default_rng(seed)
-    n = 256
-
-    short_video_hours = rng.uniform(0.5, 6.5, size=n)
-    notification_checks = rng.integers(15, 180, size=n)
-    sleep_hours = np.clip(rng.normal(6.8, 1.1, size=n), 4.0, 9.5)
-    study_hours = np.clip(rng.normal(3.2, 1.3, size=n) - 0.25 * short_video_hours, 0.5, 8.0)
-    attention_span_min = np.clip(45 - 4.2 * short_video_hours - 0.08 * notification_checks + rng.normal(0, 3.5, size=n), 8.0, 60.0)
-    
-    gpa = (
-        2.65
-        - 0.14 * short_video_hours
-        - 0.0025 * notification_checks
-        + 0.16 * study_hours
-        + 0.07 * (sleep_hours - 6.5)
-        + 0.012 * attention_span_min
-        - 0.02 * (short_video_hours ** 1.5)
-        + rng.normal(0, 0.18, size=n)
-    )
-    gpa = np.clip(gpa, 1.0, 4.0)
-
-    df = pd.DataFrame({
-        "short_video_hours_per_day": np.round(short_video_hours, 3),
-        "notification_checks_per_day": notification_checks,
-        "sleep_hours": np.round(sleep_hours, 3),
-        "deep_study_hours": np.round(study_hours, 3),
-        "attention_span_minutes": np.round(attention_span_min, 3),
-        "gpa": np.round(gpa, 4),
-    })
-    df.to_csv(dataset_path, index=False)
-    print(f"[INFO] Сформирован и сохранён датасет: {dataset_path} ({len(df)} строк)")
-    return df
+DEFAULT_CONFIG = {
+    "experiment_name": "student_gpa_social_media_benchmark",
+    "random_seed": 42,
+    "test_size": 0.2,
+    "bootstrap_iterations": 1000,
+    "warmup_runs": 3,
+    "evaluation_runs": 20,
+    "load_levels": [64, 128, 192, 256],
+    "paths": {
+        "sample_data": "data/sample/sample_survey.csv",
+        "full_data": "data/cleaned_survey.csv",
+        "raw_jsonl": "data/raw/test_run.jsonl",
+        "processed_csv": "data/processed/metrics_summary.csv",
+        "figures_dir": "reports/figures",
+    },
+    "features": {
+        "target": "Last Academic Result (GPA/CGPA)",
+        "numeric_features": [
+            "Age",
+            "Study time (In Hours)",
+            "Attendance rate (In Percentile)",
+            "Time spent in social media (hours)",
+            "Sleep Disturbance on Sleep Quality",
+            "Mood Modification Scale",
+            "Anxiety Scale ",
+            "Depression Scale",
+            "Self-esteem Scale",
+            "Social Media Distraction During Academic Activities ",
+        ],
+    },
+    "models": {
+        "baseline_ridge": {"alpha": 1.0},
+        "random_forest": {"n_estimators": 100, "max_depth": 5},
+        "gradient_boosting": {"n_estimators": 100, "learning_rate": 0.05, "max_depth": 3},
+    },
+    "guardrails": {"max_latency_ms": 2000.0, "max_ram_mb": 512.0},
+}
 
 
-def build_models(model_cfg: dict, seed: int) -> dict:
-    return {
-        "Ridge": Ridge(
-            alpha=model_cfg.get("Ridge", {}).get("alpha", 1.0),
-            random_state=seed,
+def load_config(config_path: str = "configs/config.yaml") -> dict:
+    if os.path.exists(config_path):
+        try:
+            import yaml
+            with open(config_path, "r", encoding="utf-8") as f:
+                return yaml.safe_load(f)
+        except ImportError:
+            pass
+    return DEFAULT_CONFIG
+
+
+def get_rss_memory_mb() -> float:
+    """Measure real process Resident Set Size (RSS) memory in MB without artificial offsets."""
+    try:
+        import psutil
+        return float(psutil.Process(os.getpid()).memory_info().rss / (1024.0 * 1024.0))
+    except ImportError:
+        import resource
+        usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        if sys.platform == "darwin":
+            return float(usage / (1024.0 * 1024.0))
+        return float(usage / 1024.0)
+
+
+def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = True) -> pd.DataFrame:
+    cfg = load_config(config_path)
+
+    data_path = cfg["paths"]["full_data"] if use_full else cfg["paths"]["sample_data"]
+    if not os.path.exists(data_path):
+        raise FileNotFoundError(f"Real survey dataset not found at {data_path}")
+
+    df = pd.read_csv(data_path)
+    features = [c for c in cfg["features"]["numeric_features"] if c in df.columns]
+    target = cfg["features"]["target"]
+
+    X_full = df[features].values
+    y_full = df[target].values
+
+    base_seed = int(cfg["random_seed"])
+    warmup_runs = int(cfg.get("warmup_runs", 3))
+    eval_runs = int(cfg.get("evaluation_runs", 20))
+    load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
+
+    models_cfg = {
+        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
+        "RandomForest": lambda s: RandomForestRegressor(
+            n_estimators=cfg["models"]["random_forest"]["n_estimators"],
+            max_depth=cfg["models"]["random_forest"]["max_depth"],
+            random_state=s,
         ),
-        "Random Forest": RandomForestRegressor(
-            n_estimators=model_cfg.get("Random Forest", {}).get("n_estimators", 100),
-            max_depth=model_cfg.get("Random Forest", {}).get("max_depth", 6),
-            random_state=seed,
-            n_jobs=1,
-        ),
-        "Gradient Boosting": GradientBoostingRegressor(
-            n_estimators=model_cfg.get("Gradient Boosting", {}).get("n_estimators", 100),
-            learning_rate=model_cfg.get("Gradient Boosting", {}).get("learning_rate", 0.08),
-            max_depth=model_cfg.get("Gradient Boosting", {}).get("max_depth", 3),
-            random_state=seed,
+        "GradientBoosting": lambda s: GradientBoostingRegressor(
+            n_estimators=cfg["models"]["gradient_boosting"]["n_estimators"],
+            learning_rate=cfg["models"]["gradient_boosting"]["learning_rate"],
+            max_depth=cfg["models"]["gradient_boosting"]["max_depth"],
+            random_state=s,
         ),
     }
 
+    raw_records = []
+    run_id = 0
+    total_iters = warmup_runs + eval_runs
 
-def run_benchmark(config_path: str, full_run: bool = True) -> None:
-    with open(config_path, "r", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f)
+    for model_name, model_fn in models_cfg.items():
+        for n_samples in load_levels:
+            for i in range(total_iters):
+                phase = "warmup" if i < warmup_runs else "evaluation"
+                seed = base_seed + i * 7 + int(n_samples)
+                rng = np.random.default_rng(seed)
+                idx = rng.choice(len(df), size=int(n_samples), replace=True)
+                X_sub = X_full[idx]
+                y_sub = y_full[idx]
 
-    exp_cfg = cfg["experiment"]
-    paths_cfg = cfg["paths"]
-    base_seed = int(exp_cfg.get("seed", 42))
-    warmup_runs = int(exp_cfg.get("warmup_runs", 3))
-    eval_runs = int(exp_cfg.get("eval_runs", 20)) if full_run else 5
-    sample_sizes = exp_cfg.get("sample_sizes", [64, 128, 192, 256])
-    test_size = float(exp_cfg.get("test_size", 0.2))
+                split = max(1, int((1.0 - float(cfg["test_size"])) * len(X_sub)))
+                X_tr, X_te = X_sub[:split], X_sub[split:]
+                y_tr, y_te = y_sub[:split], y_sub[split:]
 
-    dataset_path = Path(paths_cfg["dataset"])
-    raw_logs_path = Path(paths_cfg["raw_logs"])
-    raw_logs_path.parent.mkdir(parents=True, exist_ok=True)
-
-    df = ensure_dataset(dataset_path, seed=base_seed)
-    feature_cols = [c for c in df.columns if c != "gpa"]
-    target_col = "gpa"
-
-    records = []
-    total_iterations = warmup_runs + eval_runs
-
-    for sample_size in sample_sizes:
-        for run_idx in range(total_iterations):
-            phase = "warmup" if run_idx < warmup_runs else "evaluation"
-            eval_run_id = (run_idx - warmup_runs + 1) if phase == "evaluation" else (run_idx + 1)
-            iter_seed = base_seed + sample_size * 1000 + run_idx
-
-            sub_df = df.sample(n=sample_size, replace=False, random_state=iter_seed)
-            X = sub_df[feature_cols].to_numpy()
-            y = sub_df[target_col].to_numpy()
-
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=iter_seed
-            )
-
-            scaler = StandardScaler()
-            X_train_scaled = scaler.fit_transform(X_train)
-            X_test_scaled = scaler.transform(X_test)
-
-            baseline = DummyRegressor(strategy="mean")
-            baseline.fit(X_train_scaled, y_train)
-            y_pred_base = baseline.predict(X_test_scaled)
-            baseline_rmse = float(root_mean_squared_error(y_test, y_pred_base))
-
-            models = build_models(cfg.get("models", {}), seed=iter_seed)
-
-            for model_name, model in models.items():
-                error_flag = 0
-                rmse_val = float("nan")
-                rmse_diff = float("nan")
-
-                tracemalloc.start()
+                model = model_fn(seed)
                 t0 = time.perf_counter()
-                try:
-                    model.fit(X_train_scaled, y_train)
-                    y_pred = model.predict(X_test_scaled)
-                    rmse_val = float(root_mean_squared_error(y_test, y_pred))
-                    rmse_diff = float(baseline_rmse - rmse_val)
-                except Exception:
-                    error_flag = 1
-                t1 = time.perf_counter()
-                _, peak_bytes = tracemalloc.get_traced_memory()
-                tracemalloc.stop()
+                model.fit(X_tr, y_tr)
+                preds = model.predict(X_te)
+                latency_ms = (time.perf_counter() - t0) * 1000.0
 
-                latency_ms = (t1 - t0) * 1000.0
-                
-                ram_mb = round(42.0 + (peak_bytes / (1024.0 * 1024.0)), 4)
+                ram_mb = get_rss_memory_mb()
+                rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
+                mae = float(mean_absolute_error(y_te, preds))
+                r2 = float(r2_score(y_te, preds)) if len(y_te) > 1 else 0.0
 
-                record = {
+                error_rate = 0.0 if (
+                    latency_ms <= cfg["guardrails"]["max_latency_ms"]
+                    and ram_mb <= cfg["guardrails"]["max_ram_mb"]
+                    and not np.isnan(rmse)
+                ) else 1.0
+
+                raw_records.append({
+                    "run_id": run_id,
                     "phase": phase,
+                    "iteration": i,
                     "model": model_name,
-                    "sample_size": int(sample_size),
-                    "run_id": int(eval_run_id),
-                    "seed": int(iter_seed),
-                    "RMSE": round(rmse_val, 6),
-                    "baseline_rmse": round(baseline_rmse, 6),
-                    "rmse_diff": round(rmse_diff, 6),
-                    "latency_ms": round(latency_ms, 4),
-                    "ram_mb": ram_mb,
-                    "error_rate": int(error_flag),
-                }
-                records.append(record)
+                    "sample_size": int(n_samples),
+                    "RMSE": round(rmse, 4),
+                    "MAE": round(mae, 4),
+                    "R2": round(r2, 4),
+                    "latency_ms": round(latency_ms, 3),
+                    "ram_mb": round(ram_mb, 2),
+                    "error_rate": error_rate,
+                })
+                run_id += 1
 
-    with open(raw_logs_path, "w", encoding="utf-8") as f:
-        for rec in records:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    out_jsonl = Path(cfg["paths"]["raw_jsonl"])
+    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_jsonl, "w", encoding="utf-8") as f:
+        for r in raw_records:
+            f.write(json.dumps(r) + "\n")
 
-    n_warmup = sum(1 for r in records if r["phase"] == "warmup")
-    n_eval = sum(1 for r in records if r["phase"] == "evaluation")
-    print(
-        f"[OK] Логи записаны в {raw_logs_path}: всего {len(records)} записей "
-        f"({n_warmup} warmup + {n_eval} evaluation)."
-    )
+    print(f"Saved {len(raw_records)} benchmark records to {out_jsonl}")
+    return pd.DataFrame(raw_records)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run ML benchmark across workload levels.")
+    parser = argparse.ArgumentParser(description="Run GPA Prediction Benchmark on Real Survey Dataset")
     parser.add_argument("--config", type=str, default="configs/config.yaml", help="Path to config.yaml")
-    parser.add_argument("--full", action="store_true", help="Run full 240 evaluation + 36 warmup runs")
+    parser.add_argument("--sample", action="store_true", help="Run on 10-row sample instead of full 256-row dataset")
+    parser.add_argument("--full", action="store_true", help="Run on full 256-row dataset (default)")
     args = parser.parse_args()
-    
-    run_benchmark(args.config, full_run=True)
+    use_full_flag = not args.sample
+    run_benchmark(args.config, use_full=use_full_flag)
