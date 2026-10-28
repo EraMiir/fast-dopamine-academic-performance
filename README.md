@@ -82,12 +82,12 @@ All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evalu
 # 1. Install exact pinned dependencies
 pip install -r requirements.txt
 
-# 2. Run benchmark script (append --full for all 256 rows)
-python src/benchmark.py --config configs/config.yaml
+# 2. Run benchmark on the full 256-row real survey dataset (or use --sample for the 10-row smoke test)
+python src/benchmark.py --config configs/config.yaml --full
 
-# 3. Process raw JSONL logs (filters warm-up & computes 1000-iteration bootstrap 95% CIs)
-python src/process_data.py --input data/raw/test_run.jsonl --output data/processed/metrics_summary.csv
+# 3. Filter warm-up runs and compute 1,000-iteration bootstrap statistics (including p95 & p99)
+python src/process_data.py --config configs/config.yaml
 
-# 4. Generate publication-ready vector PDF and 300 DPI PNG plots
-python src/visualize.py --raw data/raw/test_run.jsonl --summary data/processed/metrics_summary.csv --outdir reports/figures
+# 4. Generate publication-ready PDF and 300 DPI PNG figures in reports/figures/
+python src/visualize.py --config configs/config.yaml
 ```
