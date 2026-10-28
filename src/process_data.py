@@ -38,8 +38,9 @@ def process_logs(config_path: str) -> pd.DataFrame:
     n_boot = int(exp_cfg.get("bootstrap_iterations", 2000))
     ci_level = float(exp_cfg.get("confidence_level", 0.95))
 
-    raw_logs_path = Path(paths_cfg["raw_logs"])
-    summary_csv_path = Path(paths_cfg["summary_csv"])
+    root = Path(__file__).resolve().parent.parent
+    raw_logs_path = root / paths_cfg["raw_logs"]
+    summary_csv_path = root / paths_cfg["summary_csv"]
     summary_csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(raw_logs_path, "r", encoding="utf-8") as f:

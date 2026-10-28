@@ -25,8 +25,9 @@ def generate_plots(config_path: str) -> None:
     with open(config_path, "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
-    summary_csv = Path(cfg["paths"]["summary_csv"])
-    figures_dir = Path(cfg["paths"]["figures_dir"])
+    root = Path(__file__).resolve().parent.parent
+    summary_csv = root / cfg["paths"]["summary_csv"]
+    figures_dir = root / cfg["paths"]["figures_dir"]
     df = pd.read_csv(summary_csv)
 
     plt.rcParams.update({
