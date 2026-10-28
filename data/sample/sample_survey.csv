@@ -1,11 +1,257 @@
-Timestamp,Age,Gender,Residence Area,Education Level,Socioeconomic status (Parent's education level),Study time (In Hours),Attendance rate (In Percentile),Social Media Platform,Time spent in social media (hours),Most time spent in a day,Physical activity (30 min+),Withdrawal symptoms (Side effects of not using social media),Sleep Disturbance on Sleep Quality,Mood Modification Scale,Anxiety Scale,Depression Scale,Self-esteem Scale,Last Academic Result (GPA/CGPA),Social Media Distraction During Academic Activities,Year,Month,Day,Time
+Timestamp,Age,Gender,Residence Area  ,Education Level,Socioeconomic status (Parent's education level),Study time (In Hours),Attendance rate (In Percentile),Social Media Platform,Time spent in social media (hours),Most time spent in a day,Physical activity (30 min+) ,Withdrawal symptoms (Side effects of not using social media),Sleep Disturbance on Sleep Quality,Mood Modification Scale,Anxiety Scale ,Depression Scale,Self-esteem Scale,Last Academic Result (GPA/CGPA),Social Media Distraction During Academic Activities ,Year,Month,Day,Time
 2025-04-26 01:14:36,28,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.8,YouTube,4.0,Night,Yes,Feeling restless,4,3,4,5,4,3.55,5,2025,4,26,01:14:36
 2025-04-26 01:24:20,21,Male,Rural,Tertiary Education,No education,3.0,0.6,Instagram,5.0,Afternoon,Yes,No symptoms,5,2,2,1,5,3.1,3,2025,4,26,01:24:20
 2025-04-27 21:38:37,17,Female,Rural,HSC / A' Level,SSC / O' Level,6.5,0.7,YouTube,2.0,Night,Yes,Cravings,1,2,2,1,1,3.67,1,2025,4,27,21:38:37
 2025-04-27 21:46:22,26,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.85,Facebook,5.0,Night,No,Cravings,4,3,4,3,4,2.78,4,2025,4,27,21:46:22
 2025-04-27 21:46:32,21,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.95,YouTube,6.0,Night,Yes,Cravings,1,4,2,3,4,4.0,2,2025,4,27,21:46:32
-2025-04-27 22:08:21,23,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.8,Facebook,6.0,Night,No,No symptoms,3,3,3,5,3,3.12,5,2025,4,27,22:08:21
-2025-04-27 22:08:40,22,Female,Urban,Tertiary Education,HSC / A' Level,1.5,0.9,Instagram,3.0,Night,Yes,Trouble concentrating,3,4,3,3,2,3.4,3,2025,4,27,22:08:40
-2025-04-27 22:18:19,21,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.95,Facebook,2.0,Night,Yes,No symptoms,2,2,1,1,3,3.7,1,2025,4,27,22:18:19
-2025-04-27 22:32:43,24,Male,Urban,Tertiary Education,SSC / O' Level,1.0,0.6,YouTube,4.0,Night,No,Feeling restless,4,3,3,4,3,2.9,3,2025,4,27,22:32:43
-2025-04-27 23:03:54,22,Male,Urban,Tertiary Education,Tertiary Education,4.0,0.9,Facebook,3.0,Evening,Yes,No symptoms,2,3,2,2,4,3.8,2,2025,4,27,23:03:54
+2025-04-27 21:57:07,23,Male,Urban,Tertiary Education,SSC / O' Level,4.0,0.95,Facebook,8.0,Night,Yes,Feeling restless,4,4,3,4,3,3.91,4,2025,4,27,21:57:07
+2025-04-27 22:00:49,20,Female,Urban,Tertiary Education,HSC / A' Level,3.0,0.98,Instagram,6.0,Night,No,Feeling restless,3,3,3,3,3,3.65,2,2025,4,27,22:00:49
+2025-04-27 22:07:29,22,Male,Urban,Tertiary Education,HSC / A' Level,4.5,0.97,Facebook,2.5,Night,No,No symptoms,4,4,4,4,4,3.0,3,2025,4,27,22:07:29
+2025-04-27 22:18:50,23,Male,Rural,Tertiary Education,SSC / O' Level,3.5,1.0,Facebook,3.0,Evening,No,No symptoms,3,3,5,5,1,3.51,1,2025,4,27,22:18:50
+2025-04-27 22:29:42,22,Male,Urban,Tertiary Education,Tertiary Education,1.0,0.6,Instagram,1.5,Night,Yes,No symptoms,5,4,3,4,3,3.0,2,2025,4,27,22:29:42
+2025-04-27 22:47:44,22,Female,Urban,Tertiary Education,Tertiary Education,0.5,0.25,Instagram,2.5,Night,No,No symptoms,2,4,3,2,3,3.96,3,2025,4,27,22:47:44
+2025-04-27 23:48:56,24,Male,Urban,Tertiary Education,Tertiary Education,1.0,0.1,Instagram,4.0,Night,No,Trouble concentrating,2,3,2,2,2,2.5,2,2025,4,27,23:48:56
+2025-04-28 00:11:33,24,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.6,Facebook,2.5,Night,No,Irritability or agitation,2,3,2,2,2,3.5,4,2025,4,28,00:11:33
+2025-04-28 01:17:19,27,Male,Urban,Tertiary Education,SSC / O' Level,4.0,0.99,Facebook,2.0,Night,No,No symptoms,1,1,1,2,2,3.5,4,2025,4,28,01:17:19
+2025-04-28 14:15:02,25,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.9,Facebook,2.0,Evening,Yes,No symptoms,1,2,1,1,1,3.87,2,2025,4,28,14:15:02
+2025-04-28 14:16:33,23,Female,Rural,Tertiary Education,Tertiary Education,2.0,1.0,Instagram,4.0,Morning,No,Trouble concentrating,4,2,5,5,5,3.27,3,2025,4,28,14:16:33
+2025-04-28 14:18:26,23,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.8,Facebook,6.0,Night,Yes,Trouble concentrating,3,3,5,4,5,4.0,5,2025,4,28,14:18:26
+2025-04-28 14:18:54,22,Female,Rural,Tertiary Education,SSC / O' Level,2.5,0.95,Facebook,4.5,Evening,No,Cravings,1,3,1,5,3,3.75,3,2025,4,28,14:18:54
+2025-04-28 14:19:41,21,Female,Urban,Tertiary Education,Tertiary Education,3.0,0.8,Instagram,5.5,Night,Yes,No symptoms,3,3,1,2,3,3.25,4,2025,4,28,14:19:41
+2025-04-28 14:19:53,22,Female,Urban,Tertiary Education,HSC / A' Level,5.0,0.96,YouTube,2.0,Evening,Yes,No symptoms,3,4,4,5,3,4.0,3,2025,4,28,14:19:53
+2025-04-28 14:19:58,20,Female,Urban,Tertiary Education,Tertiary Education,2.0,0.7,Facebook,5.0,Night,Yes,Cravings,2,3,4,2,2,3.0,1,2025,4,28,14:19:58
+2025-04-28 14:20:28,23,Male,Urban,Tertiary Education,SSC / O' Level,0.0,1.0,YouTube,4.5,Night,No,No symptoms,1,1,1,1,5,3.86,1,2025,4,28,14:20:28
+2025-04-28 14:20:35,22,Female,Urban,Tertiary Education,Tertiary Education,4.0,0.8,Facebook,8.0,Night,No,Irritability or agitation,4,3,3,2,3,3.64,3,2025,4,28,14:20:35
+2025-04-28 14:20:58,22,Male,Urban,Tertiary Education,HSC / A' Level,0.5,0.8,Other,2.0,Night,No,Feeling restless,3,3,1,1,3,3.8,5,2025,4,28,14:20:58
+2025-04-28 14:21:24,23,Female,Urban,Tertiary Education,Tertiary Education,6.5,0.08,Facebook,3.5,Evening,Yes,No symptoms,3,3,3,3,3,3.65,3,2025,4,28,14:21:24
+2025-04-28 14:21:29,20,Female,Urban,Tertiary Education,Tertiary Education,3.0,0.75,Instagram,2.5,Night,Yes,Trouble concentrating,2,1,4,5,4,3.7,2,2025,4,28,14:21:29
+2025-04-28 14:21:33,21,Female,Urban,Tertiary Education,Tertiary Education,0.1,0.25,YouTube,2.5,Night,No,Irritability or agitation,5,5,5,5,1,3.16,4,2025,4,28,14:21:33
+2025-04-28 14:21:55,23,Female,Urban,Tertiary Education,SSC / O' Level,5.0,0.8,Facebook,2.0,Evening,No,No symptoms,3,4,2,5,4,3.96,4,2025,4,28,14:21:55
+2025-04-28 14:22:45,21,Female,Urban,HSC / A' Level,HSC / A' Level,5.0,0.8,YouTube,4.0,Night,No,No symptoms,2,5,2,1,4,4.0,1,2025,4,28,14:22:45
+2025-04-28 14:22:49,22,Male,Urban,Tertiary Education,HSC / A' Level,4.0,0.99,Facebook,5.0,Night,Yes,Feeling restless,1,1,1,1,1,3.8,1,2025,4,28,14:22:49
+2025-04-28 14:23:17,21,Male,Urban,HSC / A' Level,HSC / A' Level,2.0,0.8,Facebook,2.0,Night,No,Trouble concentrating,2,5,2,1,4,3.5,4,2025,4,28,14:23:17
+2025-04-28 14:23:20,22,Female,Urban,Tertiary Education,SSC / O' Level,4.5,0.99,Instagram,2.5,Night,No,No symptoms,1,1,5,3,5,3.9,5,2025,4,28,14:23:20
+2025-04-28 14:23:25,23,Male,Urban,Tertiary Education,SSC / O' Level,1.0,0.85,YouTube,9.0,Night,Yes,Irritability or agitation,1,4,5,1,1,3.96,1,2025,4,28,14:23:25
+2025-04-28 14:29:33,21,Male,Urban,Tertiary Education,SSC / O' Level,7.0,0.07,Facebook,6.0,Night,No,Feeling restless,2,1,1,3,1,3.3,1,2025,4,28,14:29:33
+2025-04-28 14:29:50,23,Female,Urban,Tertiary Education,SSC / O' Level,1.0,0.9,Instagram,3.0,Evening,Yes,No symptoms,3,3,4,5,4,3.85,3,2025,4,28,14:29:50
+2025-04-28 14:30:16,22,Female,Urban,HSC / A' Level,HSC / A' Level,5.5,0.95,YouTube,5.0,Night,No,No symptoms,3,3,1,2,4,3.56,2,2025,4,28,14:30:16
+2025-04-28 14:30:19,22,Male,Urban,HSC / A' Level,Tertiary Education,6.0,0.95,YouTube,5.0,Night,No,No symptoms,5,5,5,5,5,3.88,5,2025,4,28,14:30:19
+2025-04-28 14:31:51,22,Female,Urban,Tertiary Education,Tertiary Education,1.5,0.2,Other,10.0,Night,No,Feeling restless,5,5,5,5,5,3.25,5,2025,4,28,14:31:51
+2025-04-28 14:34:50,24,Female,Urban,Tertiary Education,Tertiary Education,1.0,0.07,Facebook,4.0,Night,Yes,No symptoms,2,2,2,3,3,3.5,3,2025,4,28,14:34:50
+2025-04-28 14:58:00,23,Male,Urban,Tertiary Education,Tertiary Education,3.5,0.98,YouTube,4.5,Night,Yes,Feeling restless,2,5,3,3,4,3.96,1,2025,4,28,14:58:00
+2025-04-28 15:03:40,23,Female,Urban,Tertiary Education,SSC / O' Level,3.0,1.0,YouTube,4.0,Night,No,Irritability or agitation,1,3,1,1,1,3.0,3,2025,4,28,15:03:40
+2025-04-28 15:05:16,22,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.9,Other,6.0,Night,No,Irritability or agitation,5,4,3,3,3,3.8,5,2025,4,28,15:05:16
+2025-04-28 15:33:01,22,Male,Urban,Tertiary Education,SSC / O' Level,3.0,0.9,Instagram,4.0,Night,Yes,Feeling restless,1,3,3,4,4,3.2,4,2025,4,28,15:33:01
+2025-04-28 16:44:24,23,Female,Rural,Tertiary Education,Tertiary Education,1.0,0.95,Instagram,4.0,Night,No,Cravings,3,4,1,3,1,3.82,1,2025,4,28,16:44:24
+2025-04-28 16:51:08,22,Female,Urban,Tertiary Education,SSC / O' Level,2.0,0.9,YouTube,1.0,Night,No,Cravings,3,2,3,3,2,3.73,3,2025,4,28,16:51:08
+2025-04-28 17:18:14,22,Female,Urban,Tertiary Education,Tertiary Education,3.0,0.9,Facebook,5.0,Night,Yes,Feeling restless,4,3,3,3,3,3.75,4,2025,4,28,17:18:14
+2025-04-28 17:41:46,24,Female,Urban,Tertiary Education,No education,3.0,1.0,YouTube,5.5,Evening,No,No symptoms,5,3,3,4,3,3.86,4,2025,4,28,17:41:46
+2025-04-28 18:19:35,20,Female,Urban,Tertiary Education,HSC / A' Level,3.0,1.0,YouTube,4.0,Night,No,No symptoms,3,4,2,2,3,3.75,3,2025,4,28,18:19:35
+2025-04-28 18:30:39,22,Female,Rural,Tertiary Education,No education,5.0,0.99,YouTube,3.0,Afternoon,Yes,No symptoms,1,3,2,4,2,3.58,2,2025,4,28,18:30:39
+2025-04-28 20:10:20,23,Male,Rural,Tertiary Education,Tertiary Education,1.0,0.3,Instagram,6.0,Night,Yes,No symptoms,4,3,3,1,3,3.15,1,2025,4,28,20:10:20
+2025-04-28 20:10:27,21,Female,Rural,Tertiary Education,HSC / A' Level,5.5,1.0,Instagram,6.5,Night,Yes,No symptoms,5,2,3,1,2,4.0,5,2025,4,28,20:10:27
+2025-04-28 20:10:44,21,Male,Urban,Tertiary Education,Tertiary Education,10.0,1.0,YouTube,1.0,Night,No,Trouble concentrating,2,3,2,2,2,3.87,2,2025,4,28,20:10:44
+2025-04-28 20:10:51,21,Female,Urban,Tertiary Education,Tertiary Education,1.5,0.98,Instagram,2.5,Evening,No,No symptoms,3,3,4,3,5,3.86,1,2025,4,28,20:10:51
+2025-04-28 20:11:40,19,Male,Urban,Tertiary Education,HSC / A' Level,2.0,0.7,YouTube,6.5,Night,No,Trouble concentrating,3,3,4,3,3,3.87,2,2025,4,28,20:11:40
+2025-04-28 20:12:50,21,Female,Urban,Tertiary Education,HSC / A' Level,2.0,0.8,Instagram,4.0,Night,No,No symptoms,5,5,3,4,4,3.5,5,2025,4,28,20:12:50
+2025-04-28 20:13:27,23,Male,Urban,Tertiary Education,HSC / A' Level,0.3333333333333333,0.9,YouTube,4.0,Night,No,Feeling restless,2,5,4,4,4,3.5,3,2025,4,28,20:13:27
+2025-04-28 20:13:35,24,Male,Urban,Tertiary Education,SSC / O' Level,2.5,0.7,Instagram,7.5,Night,Yes,No symptoms,1,2,1,2,1,3.56,2,2025,4,28,20:13:35
+2025-04-28 20:13:54,23,Female,Rural,Tertiary Education,Tertiary Education,1.0,0.75,Instagram,4.5,Evening,No,Feeling restless,3,3,3,3,5,3.01,3,2025,4,28,20:13:54
+2025-04-28 20:14:03,20,Female,Urban,Tertiary Education,Madrasah,8.0,0.9,Instagram,2.5,Night,Yes,No symptoms,3,1,1,3,5,4.0,1,2025,4,28,20:14:03
+2025-04-28 20:14:03,25,Male,Urban,Tertiary Education,No education,1.5,0.3,YouTube,2.0,Night,Yes,No symptoms,3,2,1,1,1,3.34,3,2025,4,28,20:14:03
+2025-04-28 20:14:06,23,Male,Urban,Tertiary Education,Madrasah,4.0,0.98,Facebook,9.0,Afternoon,No,Feeling restless,5,4,5,2,4,3.57,5,2025,4,28,20:14:06
+2025-04-28 20:15:03,21,Male,Rural,Tertiary Education,HSC / A' Level,4.0,1.0,Facebook,5.0,Evening,No,Cravings,3,4,5,5,3,3.83,5,2025,4,28,20:15:03
+2025-04-28 20:15:07,21,Female,Urban,Tertiary Education,No education,1.0,0.86,Facebook,5.5,Night,No,No symptoms,1,3,2,3,2,3.24,2,2025,4,28,20:15:07
+2025-04-28 20:15:17,21,Male,Urban,Tertiary Education,HSC / A' Level,4.5,0.95,Facebook,2.5,Night,No,Irritability or agitation,2,3,2,1,3,3.6,1,2025,4,28,20:15:17
+2025-04-28 20:15:56,21,Female,Urban,Tertiary Education,HSC / A' Level,3.5,1.0,YouTube,5.5,Night,No,No symptoms,4,3,1,5,5,3.83,4,2025,4,28,20:15:56
+2025-04-28 20:16:12,22,Male,Urban,Tertiary Education,Tertiary Education,4.0,0.75,YouTube,3.0,Night,Yes,No symptoms,2,3,2,1,4,4.0,2,2025,4,28,20:16:12
+2025-04-28 20:16:36,23,Male,Urban,Tertiary Education,HSC / A' Level,2.0,0.8,Facebook,6.0,Night,No,Trouble concentrating,1,2,1,2,2,3.32,1,2025,4,28,20:16:36
+2025-04-28 20:17:09,22,Male,Urban,Tertiary Education,SSC / O' Level,1.0,0.5,Instagram,8.5,Night,Yes,Cravings,3,3,4,4,3,3.28,2,2025,4,28,20:17:09
+2025-04-28 20:18:19,22,Female,Urban,HSC / A' Level,HSC / A' Level,3.0,0.9,Instagram,2.0,Afternoon,Yes,No symptoms,1,3,2,1,5,3.83,1,2025,4,28,20:18:19
+2025-04-28 20:19:30,24,Female,Urban,Tertiary Education,HSC / A' Level,1.0,0.6,YouTube,4.5,Night,Yes,No symptoms,3,4,1,5,3,3.27,2,2025,4,28,20:19:30
+2025-04-28 20:20:07,21,Female,Rural,Tertiary Education,Tertiary Education,6.0,0.9,Facebook,4.0,Afternoon,No,Cravings,2,2,1,4,5,4.0,2,2025,4,28,20:20:07
+2025-04-28 20:21:37,21,Male,Urban,Tertiary Education,HSC / A' Level,5.0,0.8,Facebook,3.0,Night,No,No symptoms,3,2,1,1,3,4.0,4,2025,4,28,20:21:37
+2025-04-28 20:22:00,20,Female,Urban,Tertiary Education,HSC / A' Level,5.5,0.1,Facebook,2.0,Afternoon,No,No symptoms,1,1,1,1,5,3.62,1,2025,4,28,20:22:00
+2025-04-28 20:22:05,21,Female,Urban,Tertiary Education,Tertiary Education,4.0,0.96,Facebook,3.0,Night,No,No symptoms,1,2,3,3,3,4.0,1,2025,4,28,20:22:05
+2025-04-28 20:22:09,20,Male,Urban,Tertiary Education,Tertiary Education,2.5,0.5,Other,3.5,Evening,Yes,Feeling restless,3,2,2,1,1,3.5,3,2025,4,28,20:22:09
+2025-04-28 20:23:17,21,Male,Urban,Tertiary Education,Madrasah,1.0,1.0,YouTube,10.0,Evening,No,Feeling restless,3,3,2,2,3,3.58,1,2025,4,28,20:23:17
+2025-04-28 20:23:30,21,Male,Urban,HSC / A' Level,Tertiary Education,1.0,0.9,Other,2.0,Night,Yes,No symptoms,2,5,1,1,3,3.67,1,2025,4,28,20:23:30
+2025-04-28 20:23:57,19,Male,Rural,HSC / A' Level,SSC / O' Level,3.0,1.0,Facebook,8.0,Night,Yes,No symptoms,5,5,3,3,4,4.0,5,2025,4,28,20:23:57
+2025-04-28 20:24:00,21,Male,Urban,Tertiary Education,SSC / O' Level,4.0,0.5,YouTube,1.0,Night,No,No symptoms,1,5,1,1,1,3.74,1,2025,4,28,20:24:00
+2025-04-28 20:24:52,21,Male,Urban,Tertiary Education,HSC / A' Level,3.0,0.78,Facebook,5.0,Evening,Yes,Cravings,1,1,1,1,2,3.0,1,2025,4,28,20:24:52
+2025-04-28 20:26:13,20,Female,Urban,Tertiary Education,Tertiary Education,5.0,0.85,YouTube,6.5,Night,Yes,Trouble concentrating,3,3,3,4,3,3.7,3,2025,4,28,20:26:13
+2025-04-28 20:28:47,22,Female,Urban,Tertiary Education,Tertiary Education,5.5,1.0,YouTube,4.5,Night,Yes,No symptoms,3,4,4,5,2,3.3,3,2025,4,28,20:28:47
+2025-04-28 20:31:02,22,Male,Urban,Tertiary Education,Madrasah,1.0,0.9,Instagram,4.0,Night,Yes,Feeling restless,2,3,2,2,3,3.3,2,2025,4,28,20:31:02
+2025-04-28 20:32:21,20,Female,Urban,Tertiary Education,SSC / O' Level,1.5,0.98,Instagram,7.5,Evening,No,Feeling restless,3,4,2,3,3,3.91,4,2025,4,28,20:32:21
+2025-04-28 20:33:16,22,Female,Urban,Tertiary Education,Tertiary Education,3.5,0.9,Facebook,7.0,Night,Yes,Trouble concentrating,4,4,4,4,4,3.67,4,2025,4,28,20:33:16
+2025-04-28 20:47:58,21,Male,Urban,Tertiary Education,SSC / O' Level,5.0,0.85,Facebook,12.0,Night,No,Trouble concentrating,3,4,4,5,3,3.3,1,2025,4,28,20:47:58
+2025-04-28 20:50:40,24,Female,Urban,HSC / A' Level,HSC / A' Level,2.5,0.9,Instagram,5.5,Evening,Yes,Cravings,2,4,1,3,1,3.25,1,2025,4,28,20:50:40
+2025-04-28 21:06:30,21,Male,Urban,Tertiary Education,HSC / A' Level,2.5,1.0,YouTube,8.0,Night,No,No symptoms,1,4,3,1,3,3.71,4,2025,4,28,21:06:30
+2025-04-28 21:07:58,23,Male,Urban,Tertiary Education,SSC / O' Level,2.0,0.9,YouTube,4.0,Night,Yes,Cravings,4,5,4,3,4,3.56,5,2025,4,28,21:07:58
+2025-04-28 21:09:23,20,Female,Urban,Tertiary Education,HSC / A' Level,0.0,1.0,Instagram,12.0,Night,No,Irritability or agitation,3,3,2,1,2,3.5,5,2025,4,28,21:09:23
+2025-04-28 21:30:03,24,Male,Rural,Tertiary Education,HSC / A' Level,4.0,0.95,Facebook,4.0,Evening,Yes,No symptoms,2,3,1,2,2,3.72,4,2025,4,28,21:30:03
+2025-04-28 21:33:57,20,Female,Urban,Tertiary Education,Tertiary Education,3.0,0.99,YouTube,0.5,Evening,Yes,Feeling restless,5,3,4,3,5,3.0,4,2025,4,28,21:33:57
+2025-04-28 21:35:46,21,Male,Urban,Tertiary Education,SSC / O' Level,3.0,0.9,YouTube,2.0,Evening,Yes,No symptoms,3,3,3,4,3,3.75,4,2025,4,28,21:35:46
+2025-04-28 21:39:14,19,Male,Urban,Tertiary Education,Tertiary Education,6.0,0.98,Facebook,2.0,Evening,Yes,No symptoms,3,2,2,2,1,3.5,3,2025,4,28,21:39:14
+2025-04-28 21:48:51,21,Male,Urban,Tertiary Education,SSC / O' Level,5.0,0.8,Other,1.75,Night,Yes,No symptoms,1,1,1,1,1,3.86,1,2025,4,28,21:48:51
+2025-04-28 22:02:27,22,Male,Urban,Tertiary Education,SSC / O' Level,1.0,0.7,Facebook,3.0,Night,No,Cravings,3,4,2,2,2,3.92,2,2025,4,28,22:02:27
+2025-04-28 22:44:53,27,Male,Urban,Tertiary Education,SSC / O' Level,3.5,0.6,YouTube,1.5,Night,No,No symptoms,3,3,3,5,5,3.71,4,2025,4,28,22:44:53
+2025-04-28 23:05:38,22,Female,Urban,HSC / A' Level,HSC / A' Level,4.0,0.8,Facebook,3.0,Night,Yes,Cravings,5,3,2,5,3,3.97,4,2025,4,28,23:05:38
+2025-04-28 23:18:55,23,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.7,YouTube,6.0,Night,No,Cravings,4,4,3,4,2,4.0,4,2025,4,28,23:18:55
+2025-04-28 23:37:29,22,Female,Urban,Tertiary Education,HSC / A' Level,3.5,0.9,Instagram,4.5,Night,No,Feeling restless,2,3,3,4,4,3.69,5,2025,4,28,23:37:29
+2025-04-28 23:47:03,20,Male,Urban,Tertiary Education,HSC / A' Level,3.0,0.7,Facebook,1.0,Morning,Yes,No symptoms,1,2,2,2,2,4.0,2,2025,4,28,23:47:03
+2025-04-28 23:58:17,23,Female,Urban,Tertiary Education,HSC / A' Level,1.5,1.0,Facebook,3.5,Night,No,No symptoms,1,1,1,2,1,3.95,3,2025,4,28,23:58:17
+2025-04-29 00:00:21,23,Male,Urban,Tertiary Education,Tertiary Education,4.5,0.95,Facebook,2.0,Night,Yes,No symptoms,2,1,1,1,3,4.0,3,2025,4,29,00:00:21
+2025-04-29 00:31:23,23,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.8,Instagram,3.0,Night,Yes,No symptoms,4,3,2,2,2,3.63,2,2025,4,29,00:31:23
+2025-04-29 01:36:51,22,Male,Rural,Tertiary Education,No education,4.0,0.85,YouTube,2.5,Afternoon,No,Feeling restless,4,2,4,2,3,3.85,1,2025,4,29,01:36:51
+2025-04-29 12:15:47,20,Female,Urban,Tertiary Education,No education,3.5,1.0,Instagram,4.0,Night,Yes,No symptoms,3,4,4,3,3,3.5,3,2025,4,29,12:15:47
+2025-04-29 18:09:35,23,Male,Urban,Tertiary Education,SSC / O' Level,2.5,0.8,YouTube,1.0,Night,Yes,No symptoms,3,1,1,1,1,3.41,1,2025,4,29,18:09:35
+2025-04-29 18:10:19,21,Female,Urban,Tertiary Education,SSC / O' Level,5.5,0.95,YouTube,2.0,Night,No,No symptoms,1,2,1,4,3,4.0,1,2025,4,29,18:10:19
+2025-04-29 18:24:30,21,Male,Rural,Tertiary Education,HSC / A' Level,5.0,0.9,YouTube,3.0,Night,Yes,Feeling restless,4,3,3,3,3,3.8,3,2025,4,29,18:24:30
+2025-04-30 00:30:26,21,Male,Urban,HSC / A' Level,HSC / A' Level,8.0,0.8,YouTube,5.0,Night,Yes,No symptoms,4,2,2,2,2,4.0,1,2025,4,30,00:30:26
+2025-05-01 00:26:41,21,Male,Urban,Tertiary Education,SSC / O' Level,2.5,0.7,Facebook,4.5,Night,No,No symptoms,4,3,3,5,5,3.5,2,2025,5,1,00:26:41
+2025-05-01 10:41:04,20,Male,Urban,Tertiary Education,SSC / O' Level,2.0,1.0,Instagram,2.0,Night,Yes,Feeling restless,4,3,3,3,3,3.0,3,2025,5,1,10:41:04
+2025-05-02 16:56:33,24,Female,Urban,Tertiary Education,HSC / A' Level,11.0,1.0,Other,0.16666666666666666,Night,Yes,No symptoms,3,3,3,3,3,3.78,3,2025,5,2,16:56:33
+2025-05-03 13:32:16,24,Male,Urban,Tertiary Education,SSC / O' Level,2.5,0.8,YouTube,1.0,Night,No,Feeling restless,5,3,3,2,3,4.0,3,2025,5,3,13:32:16
+2025-05-04 23:58:19,22,Male,Urban,Tertiary Education,No education,2.5,0.75,Facebook,1.5,Night,No,No symptoms,2,5,5,5,3,3.0,3,2025,5,4,23:58:19
+2025-05-05 01:54:05,25,Male,Urban,Tertiary Education,Tertiary Education,0.16666666666666666,1.0,Instagram,8.0,Night,No,Cravings,5,5,5,5,5,3.46,5,2025,5,5,01:54:05
+2025-05-05 03:21:02,22,Female,Urban,HSC / A' Level,HSC / A' Level,1.5,0.98,Instagram,12.0,Night,Yes,Feeling restless,4,3,3,3,3,4.0,3,2025,5,5,03:21:02
+2025-05-06 15:59:53,23,Male,Urban,Tertiary Education,Tertiary Education,6.0,0.7,YouTube,0.5,Evening,Yes,Cravings,2,2,3,3,2,3.4,1,2025,5,6,15:59:53
+2025-05-08 22:27:39,27,Female,Rural,Tertiary Education,SSC / O' Level,5.0,0.9,Facebook,6.0,Night,Yes,Feeling restless,3,3,1,1,3,3.65,3,2025,5,8,22:27:39
+2025-05-09 01:31:28,27,Female,Urban,Tertiary Education,HSC / A' Level,3.5,0.99,YouTube,1.0,Evening,Yes,No symptoms,1,1,1,1,2,3.78,2,2025,5,9,01:31:28
+2025-05-09 10:48:27,26,Female,Urban,Tertiary Education,HSC / A' Level,2.0,0.8,TikTok,12.0,Night,No,Trouble concentrating,4,4,4,5,3,3.63,3,2025,5,9,10:48:27
+2025-05-11 16:22:44,23,Male,Rural,Tertiary Education,Tertiary Education,1.0,1.0,Other,1.5,Night,Yes,No symptoms,4,2,5,2,3,3.79,1,2025,5,11,16:22:44
+2025-05-12 00:57:13,29,Male,Urban,HSC / A' Level,HSC / A' Level,1.0,0.12,Facebook,3.0,Evening,Yes,No symptoms,3,3,2,3,3,3.0,1,2025,5,12,00:57:13
+2025-05-12 10:27:58,23,Male,Urban,Tertiary Education,HSC / A' Level,5.0,0.4,Facebook,5.0,Night,Yes,No symptoms,2,4,4,4,3,3.4,5,2025,5,12,10:27:58
+2025-05-16 18:27:20,23,Male,Urban,Tertiary Education,Tertiary Education,0.0,0.7,Facebook,2.5,Night,Yes,No symptoms,3,4,4,4,3,3.9,5,2025,5,16,18:27:20
+2025-05-16 20:20:06,23,Male,Urban,Tertiary Education,HSC / A' Level,0.0,0.6,Instagram,5.0,Night,No,Trouble concentrating,2,3,2,1,2,4.0,2,2025,5,16,20:20:06
+2025-05-16 23:58:45,22,Female,Urban,Tertiary Education,Tertiary Education,3.0,1.0,YouTube,7.5,Night,No,No symptoms,3,3,4,4,3,4.0,2,2025,5,16,23:58:45
+2025-05-16 23:59:07,23,Male,Rural,Tertiary Education,HSC / A' Level,2.0,0.8,Facebook,4.0,Night,Yes,Cravings,3,2,3,2,2,3.25,2,2025,5,16,23:59:07
+2025-05-17 00:00:06,21,Female,Urban,Tertiary Education,HSC / A' Level,2.0,0.9,Facebook,5.0,Night,No,Irritability or agitation,4,3,5,5,3,3.49,4,2025,5,17,00:00:06
+2025-05-17 00:01:57,22,Female,Urban,Tertiary Education,Tertiary Education,4.5,0.98,Instagram,1.5,Night,No,No symptoms,1,1,2,1,3,3.75,1,2025,5,17,00:01:57
+2025-05-17 00:02:00,22,Female,Urban,Tertiary Education,HSC / A' Level,3.0,0.8,Facebook,2.0,Evening,Yes,No symptoms,1,2,5,5,1,3.0,5,2025,5,17,00:02:00
+2025-05-17 00:06:07,22,Male,Urban,Tertiary Education,SSC / O' Level,4.5,0.75,Facebook,5.5,Night,No,Irritability or agitation,5,3,4,5,3,3.5,4,2025,5,17,00:06:07
+2025-05-17 00:07:19,26,Male,Urban,HSC / A' Level,HSC / A' Level,1.0,0.9,Facebook,4.5,Night,Yes,Feeling restless,2,3,3,2,1,3.25,2,2025,5,17,00:07:19
+2025-05-17 00:29:40,22,Male,Urban,Tertiary Education,Tertiary Education,1.0,0.8,Facebook,5.0,Night,Yes,No symptoms,4,5,5,5,5,3.7,5,2025,5,17,00:29:40
+2025-05-17 00:57:50,23,Male,Urban,Tertiary Education,SSC / O' Level,2.5,0.7,Facebook,4.0,Night,Yes,Feeling restless,3,5,4,3,4,3.5,4,2025,5,17,00:57:50
+2025-05-17 03:41:27,21,Female,Urban,Tertiary Education,Tertiary Education,8.0,1.0,YouTube,2.0,Afternoon,Yes,No symptoms,5,1,1,2,1,3.9,2,2025,5,17,03:41:27
+2025-05-17 03:51:44,21,Female,Urban,Tertiary Education,Tertiary Education,1.5,0.7,Instagram,3.5,Night,Yes,No symptoms,4,3,1,1,3,3.45,2,2025,5,17,03:51:44
+2025-05-17 10:28:42,22,Female,Urban,Tertiary Education,Tertiary Education,3.5,1.0,YouTube,4.5,Night,No,No symptoms,5,3,2,2,2,3.9,3,2025,5,17,10:28:42
+2025-05-17 10:35:13,21,Male,Urban,HSC / A' Level,HSC / A' Level,0.5,0.7,YouTube,3.0,Night,Yes,No symptoms,3,3,3,1,1,3.75,3,2025,5,17,10:35:13
+2025-05-17 13:11:00,23,Female,Urban,Tertiary Education,Tertiary Education,4.0,0.98,YouTube,2.5,Evening,No,No symptoms,2,1,2,2,1,3.88,4,2025,5,17,13:11:00
+2025-05-17 15:40:03,20,Female,Urban,Tertiary Education,Tertiary Education,2.5,0.99,Facebook,3.25,Night,No,Feeling restless,2,3,2,3,3,3.67,2,2025,5,17,15:40:03
+2025-05-17 17:56:05,21,Female,Urban,Tertiary Education,HSC / A' Level,2.0,1.0,YouTube,6.0,Night,Yes,No symptoms,3,4,3,3,2,3.94,3,2025,5,17,17:56:05
+2025-05-20 00:34:06,22,Female,Urban,Tertiary Education,HSC / A' Level,2.0,0.75,YouTube,6.0,Night,No,Irritability or agitation,5,4,3,4,4,3.03,4,2025,5,20,00:34:06
+2025-05-20 11:17:07,22,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.9,Facebook,4.0,Night,Yes,Feeling restless,4,3,4,4,3,3.66,4,2025,5,20,11:17:07
+2025-05-20 18:11:29,23,Male,Urban,Tertiary Education,HSC / A' Level,3.0,0.8,Facebook,1.25,Evening,Yes,No symptoms,1,2,1,2,4,3.92,1,2025,5,20,18:11:29
+2025-06-15 20:57:09,21,Female,Urban,HSC / A' Level,Madrasah,5.0,1.0,TikTok,2.0,Evening,No,Feeling restless,1,5,1,1,5,4.0,1,2025,6,15,20:57:09
+2025-06-23 23:01:01,22,Female,Urban,Tertiary Education,Tertiary Education,0.0,0.97,Instagram,3.0,Evening,No,Irritability or agitation,3,3,3,3,3,3.3,3,2025,6,23,23:01:01
+2025-06-23 23:12:41,23,Female,Urban,Tertiary Education,Tertiary Education,5.0,0.8,Instagram,8.0,Night,Yes,No symptoms,3,3,3,5,3,3.25,5,2025,6,23,23:12:41
+2025-06-23 23:33:27,23,Male,Urban,Tertiary Education,Tertiary Education,0.0,0.7,Instagram,8.0,Night,Yes,Trouble concentrating,3,5,2,1,5,3.3,2,2025,6,23,23:33:27
+2025-06-23 23:39:04,23,Male,Urban,Tertiary Education,HSC / A' Level,0.0,0.7,Instagram,6.0,Night,No,No symptoms,4,3,3,3,3,3.18,4,2025,6,23,23:39:04
+2025-06-23 23:39:13,19,Female,Urban,HSC / A' Level,SSC / O' Level,1.0,0.8,YouTube,3.0,Morning,Yes,Irritability or agitation,5,5,5,5,5,4.0,5,2025,6,23,23:39:13
+2025-06-23 23:40:40,21,Male,Rural,Tertiary Education,Tertiary Education,5.0,1.0,YouTube,0.25,Night,No,No symptoms,1,4,3,1,1,3.9,4,2025,6,23,23:40:40
+2025-06-23 23:40:49,19,Female,Urban,Tertiary Education,Tertiary Education,2.0,1.0,Instagram,2.0,Afternoon,Yes,No symptoms,4,3,3,3,5,4.0,4,2025,6,23,23:40:49
+2025-06-23 23:44:03,20,Male,Urban,HSC / A' Level,HSC / A' Level,2.0,0.95,Instagram,4.5,Night,Yes,Cravings,3,3,4,2,4,4.0,4,2025,6,23,23:44:03
+2025-06-23 23:44:11,19,Male,Urban,Tertiary Education,Tertiary Education,4.5,0.95,YouTube,3.5,Evening,Yes,Feeling restless,3,2,3,2,3,4.0,1,2025,6,23,23:44:11
+2025-06-24 00:23:27,25,Male,Urban,Tertiary Education,Tertiary Education,6.5,0.8,YouTube,2.5,Night,Yes,No symptoms,5,5,5,5,5,3.69,5,2025,6,24,00:23:27
+2025-07-05 11:57:45,19,Male,Urban,Tertiary Education,SSC / O' Level,4.5,0.98,YouTube,8.5,Night,No,No symptoms,2,1,1,1,3,4.0,2,2025,7,5,11:57:45
+2025-06-24 05:06:45,22,Male,Rural,Tertiary Education,HSC / A' Level,4.0,0.78,YouTube,2.0,Night,Yes,Cravings,5,3,5,3,4,2.9,5,2025,6,24,05:06:45
+2025-06-24 11:48:26,23,Female,Urban,Tertiary Education,Tertiary Education,2.5,0.6,Facebook,3.0,Night,No,Cravings,3,3,1,1,3,3.2,5,2025,6,24,11:48:26
+2025-06-24 13:54:21,23,Female,Rural,Tertiary Education,SSC / O' Level,5.0,0.85,Instagram,6.0,Night,No,No symptoms,3,1,1,1,2,3.4,2,2025,6,24,13:54:21
+2025-06-25 00:59:41,22,Female,Rural,Tertiary Education,HSC / A' Level,2.0,0.7,Instagram,5.0,Evening,No,No symptoms,3,4,4,4,4,3.0,4,2025,6,25,00:59:41
+2025-06-25 01:08:49,22,Female,Urban,Tertiary Education,No education,2.0,0.7,TikTok,4.0,Night,No,Trouble concentrating,5,5,5,5,5,3.79,4,2025,6,25,01:08:49
+2025-06-25 01:10:53,30,Female,Urban,Tertiary Education,HSC / A' Level,2.0,0.95,YouTube,5.0,Night,Yes,Trouble concentrating,4,3,2,3,3,3.1,5,2025,6,25,01:10:53
+2025-06-25 01:11:26,29,Female,Urban,Tertiary Education,Tertiary Education,2.0,1.0,YouTube,5.0,Night,Yes,Cravings,2,4,3,2,4,3.2,4,2025,6,25,01:11:26
+2025-06-25 01:16:15,23,Male,Rural,Tertiary Education,No education,0.0,0.6,Facebook,5.0,Night,No,Feeling restless,3,4,3,4,5,3.1,4,2025,6,25,01:16:15
+2025-06-25 01:18:20,22,Male,Urban,Tertiary Education,Tertiary Education,0.5,0.8,Facebook,3.5,Night,Yes,No symptoms,4,2,1,1,5,3.73,4,2025,6,25,01:18:20
+2025-06-25 02:06:25,37,Male,Urban,Tertiary Education,Tertiary Education,0.0,0.9,Facebook,15.0,Morning,Yes,Cravings,3,5,2,3,3,3.17,5,2025,6,25,02:06:25
+2025-06-25 02:35:47,23,Female,Rural,Tertiary Education,No education,2.0,0.6,Facebook,3.0,Afternoon,No,Feeling restless,2,5,2,2,4,3.5,1,2025,6,25,02:35:47
+2025-06-26 14:10:55,22,Female,Urban,Tertiary Education,Tertiary Education,1.0,0.95,Instagram,5.0,Evening,No,Feeling restless,1,3,1,2,3,3.95,2,2025,6,26,14:10:55
+2025-06-28 19:32:40,22,Female,Urban,HSC / A' Level,SSC / O' Level,3.5,0.9,Instagram,2.5,Night,Yes,Cravings,2,3,2,1,3,3.26,5,2025,6,28,19:32:40
+2025-07-01 05:53:43,21,Male,Rural,Tertiary Education,Tertiary Education,8.0,1.0,YouTube,6.0,Night,No,Feeling restless,5,5,5,2,2,4.0,3,2025,7,1,05:53:43
+2025-07-02 03:46:51,23,Male,Urban,Tertiary Education,HSC / A' Level,4.0,0.9,YouTube,2.0,Night,Yes,Feeling restless,4,4,1,1,4,3.4,4,2025,7,2,03:46:51
+2025-07-03 00:14:20,23,Female,Urban,Tertiary Education,HSC / A' Level,1.0,0.8,Instagram,16.0,Afternoon,No,Feeling restless,1,3,3,3,5,3.5,5,2025,7,3,00:14:20
+2025-07-03 02:55:08,22,Male,Urban,HSC / A' Level,HSC / A' Level,1.0,0.8,Instagram,6.0,Evening,Yes,Trouble concentrating,4,2,1,1,2,4.0,3,2025,7,3,02:55:08
+2025-07-03 13:15:21,20,Male,Urban,HSC / A' Level,Tertiary Education,0.5,0.75,Instagram,2.0,Night,Yes,No symptoms,4,1,1,1,1,4.0,1,2025,7,3,13:15:21
+2025-07-03 13:38:29,20,Female,Urban,Tertiary Education,HSC / A' Level,3.5,1.0,Instagram,9.5,Night,No,No symptoms,1,4,1,1,4,4.0,3,2025,7,3,13:38:29
+2025-07-03 18:03:14,19,Male,Rural,Tertiary Education,Tertiary Education,4.0,0.99,YouTube,2.0,Afternoon,Yes,Trouble concentrating,1,1,5,5,1,4.0,1,2025,7,3,18:03:14
+2025-07-03 19:59:55,20,Female,Urban,Tertiary Education,Tertiary Education,2.0,1.0,YouTube,3.0,Evening,Yes,Feeling restless,1,1,1,1,1,3.0,1,2025,7,3,19:59:55
+2025-07-03 20:04:52,21,Female,Urban,Tertiary Education,Tertiary Education,2.0,0.9,Instagram,4.0,Afternoon,No,Trouble concentrating,3,4,4,2,3,4.0,3,2025,7,3,20:04:52
+2025-07-03 20:18:45,21,Male,Rural,HSC / A' Level,HSC / A' Level,1.5,0.9,Instagram,12.0,Night,Yes,No symptoms,3,5,4,1,5,3.16,1,2025,7,3,20:18:45
+2025-07-03 20:43:29,21,Female,Urban,Tertiary Education,Tertiary Education,10.0,1.0,Instagram,15.0,Night,No,Feeling restless,3,3,4,2,2,3.96,1,2025,7,3,20:43:29
+2025-07-05 22:05:07,22,Male,Urban,Tertiary Education,HSC / A' Level,4.5,1.0,Facebook,1.0,Evening,Yes,Feeling restless,1,1,1,3,5,4.0,1,2025,7,5,22:05:07
+2025-07-05 12:05:28,19,Female,Urban,Tertiary Education,SSC / O' Level,6.0,0.95,Instagram,5.0,Afternoon,No,No symptoms,3,4,4,1,3,4.0,5,2025,7,5,12:05:28
+2025-07-05 12:08:54,22,Male,Urban,Tertiary Education,SSC / O' Level,4.0,0.95,YouTube,4.0,Night,No,No symptoms,1,1,2,5,1,4.0,2,2025,7,5,12:08:54
+2025-07-05 12:13:31,20,Female,Urban,Tertiary Education,Tertiary Education,3.0,0.8,Instagram,8.0,Night,No,Trouble concentrating,1,2,3,5,2,4.0,5,2025,7,5,12:13:31
+2025-07-05 12:13:58,19,Male,Urban,Tertiary Education,HSC / A' Level,3.5,1.0,Other,1.0,Night,Yes,No symptoms,1,3,1,1,3,4.0,2,2025,7,5,12:13:58
+2025-07-05 12:18:41,19,Female,Rural,Tertiary Education,HSC / A' Level,4.0,0.99,Facebook,3.0,Evening,Yes,Feeling restless,2,4,3,4,3,4.0,2,2025,7,5,12:18:41
+2025-07-05 12:23:44,19,Female,Urban,Tertiary Education,Tertiary Education,3.0,1.0,Other,6.0,Evening,No,Trouble concentrating,3,5,1,4,5,4.0,1,2025,7,5,12:23:44
+2025-07-05 12:34:52,18,Female,Urban,Tertiary Education,Tertiary Education,12.0,0.99,Facebook,3.0,Afternoon,Yes,No symptoms,5,3,3,4,3,4.0,3,2025,7,5,12:34:52
+2025-07-05 12:35:11,19,Female,Urban,Tertiary Education,HSC / A' Level,5.0,0.95,Instagram,7.0,Evening,No,No symptoms,1,4,2,2,4,4.0,3,2025,7,5,12:35:11
+2025-07-05 12:38:06,20,Female,Urban,Tertiary Education,SSC / O' Level,3.0,0.9,Instagram,6.0,Night,Yes,No symptoms,3,3,2,3,3,3.75,2,2025,7,5,12:38:06
+2025-07-05 12:45:48,21,Female,Urban,HSC / A' Level,SSC / O' Level,3.5,0.95,YouTube,5.5,Night,Yes,No symptoms,2,2,2,2,2,4.0,1,2025,7,5,12:45:48
+2025-07-05 12:40:08,21,Male,Urban,HSC / A' Level,Tertiary Education,1.0,0.8,Instagram,7.0,Night,No,Cravings,3,5,4,3,4,4.0,4,2025,7,5,12:40:08
+2025-07-05 12:41:24,20,Female,Urban,Tertiary Education,HSC / A' Level,2.5,0.98,Instagram,6.0,Evening,Yes,Trouble concentrating,3,4,3,4,3,3.67,4,2025,7,5,12:41:24
+2025-07-05 12:43:06,18,Male,Urban,HSC / A' Level,Tertiary Education,4.0,0.8,YouTube,3.0,Night,No,No symptoms,1,4,2,4,3,4.0,3,2025,7,5,12:43:06
+2025-07-05 12:44:25,20,Female,Urban,Tertiary Education,HSC / A' Level,3.0,0.9,Instagram,0.5,Night,No,No symptoms,3,2,3,2,4,4.0,2,2025,7,5,12:44:25
+2025-07-05 12:44:29,21,Female,Urban,Tertiary Education,Tertiary Education,3.5,0.95,Instagram,4.5,Night,Yes,No symptoms,3,4,3,3,4,4.0,3,2025,7,5,12:44:29
+2025-07-05 12:44:59,20,Male,Urban,Tertiary Education,HSC / A' Level,5.0,0.8,Instagram,3.0,Night,Yes,No symptoms,2,3,2,2,2,4.0,2,2025,7,5,12:44:59
+2025-07-05 12:56:00,21,Female,Urban,Tertiary Education,Madrasah,1.5,0.99,Other,2.5,Evening,No,No symptoms,4,1,2,1,1,4.0,1,2025,7,5,12:56:00
+2025-07-05 13:07:58,19,Female,Rural,Tertiary Education,Tertiary Education,9.0,0.99,Instagram,3.0,Afternoon,No,No symptoms,3,1,1,1,1,4.0,1,2025,7,5,13:07:58
+2025-07-05 13:08:35,21,Female,Urban,Tertiary Education,Tertiary Education,2.0,0.9,Instagram,4.0,Night,No,No symptoms,1,2,1,4,2,3.0,1,2025,7,5,13:08:35
+2025-07-05 13:09:16,19,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.8,YouTube,3.0,Afternoon,Yes,No symptoms,1,3,3,4,1,4.0,1,2025,7,5,13:09:16
+2025-07-05 13:10:42,22,Male,Urban,Tertiary Education,Tertiary Education,4.5,0.9,Facebook,3.5,Night,Yes,Feeling restless,3,3,3,3,2,4.0,5,2025,7,5,13:10:42
+2025-07-05 13:15:40,20,Male,Urban,Tertiary Education,SSC / O' Level,4.0,0.9,Facebook,6.5,Afternoon,Yes,Cravings,5,3,4,5,3,4.0,4,2025,7,5,13:15:40
+2025-07-05 13:20:54,18,Female,Urban,Tertiary Education,No education,5.0,1.0,YouTube,4.0,Night,No,No symptoms,2,2,1,3,3,4.0,1,2025,7,5,13:20:54
+2025-07-05 13:53:02,24,Male,Urban,HSC / A' Level,HSC / A' Level,3.0,0.95,Facebook,2.0,Night,Yes,Trouble concentrating,3,2,2,3,2,4.0,1,2025,7,5,13:53:02
+2025-07-05 13:56:06,19,Female,Urban,Tertiary Education,SSC / O' Level,3.5,0.95,Instagram,1.5,Afternoon,No,Trouble concentrating,1,3,1,1,1,4.0,1,2025,7,5,13:56:06
+2025-07-05 13:58:53,19,Male,Rural,Tertiary Education,Tertiary Education,3.0,1.0,Facebook,7.0,Night,No,Feeling restless,4,4,4,3,4,4.0,5,2025,7,5,13:58:53
+2025-07-05 14:06:10,20,Male,Urban,HSC / A' Level,Madrasah,5.0,0.8,YouTube,3.0,Evening,No,No symptoms,3,1,2,2,2,4.0,2,2025,7,5,14:06:10
+2025-07-05 14:22:22,21,Male,Urban,Tertiary Education,Tertiary Education,1.0,0.9,Facebook,2.0,Night,Yes,Feeling restless,5,3,3,3,1,3.0,5,2025,7,5,14:22:22
+2025-07-05 14:54:12,18,Male,Rural,HSC / A' Level,HSC / A' Level,3.0,1.0,YouTube,5.0,Night,No,No symptoms,2,3,1,4,3,4.0,1,2025,7,5,14:54:12
+2025-07-05 14:54:15,29,Male,Rural,HSC / A' Level,HSC / A' Level,3.0,0.85,Instagram,5.0,Night,No,Trouble concentrating,2,3,1,4,3,4.0,1,2025,7,5,14:54:15
+2025-07-05 14:55:03,20,Female,Urban,Tertiary Education,No education,3.0,1.0,Instagram,0.016666666666666666,Night,No,No symptoms,1,2,2,2,2,4.0,2,2025,7,5,14:55:03
+2025-07-05 15:48:51,19,Female,Rural,Tertiary Education,HSC / A' Level,6.0,0.9,Facebook,5.0,Evening,Yes,No symptoms,3,3,4,4,4,4.0,4,2025,7,5,15:48:51
+2025-07-05 16:15:00,22,Female,Urban,Tertiary Education,Tertiary Education,4.5,0.7,YouTube,3.25,Evening,Yes,No symptoms,4,1,1,3,3,4.0,2,2025,7,5,16:15:00
+2025-07-05 16:41:33,19,Male,Urban,HSC / A' Level,HSC / A' Level,3.5,0.8,Instagram,2.5,Night,Yes,No symptoms,3,3,1,2,4,3.0,5,2025,7,5,16:41:33
+2025-07-05 16:49:59,20,Male,Urban,Tertiary Education,Tertiary Education,5.0,0.87,Facebook,5.0,Evening,Yes,No symptoms,3,3,4,3,3,4.0,2,2025,7,5,16:49:59
+2025-07-05 17:14:52,21,Female,Urban,HSC / A' Level,HSC / A' Level,2.0,0.8,Instagram,1.5,Night,No,No symptoms,1,2,4,4,3,3.92,3,2025,7,5,17:14:52
+2025-07-05 18:25:43,19,Female,Rural,Tertiary Education,Tertiary Education,4.0,1.0,Instagram,2.5,Night,Yes,Feeling restless,1,5,5,5,5,3.0,5,2025,7,5,18:25:43
+2025-07-05 18:31:29,18,Female,Urban,Tertiary Education,HSC / A' Level,3.5,0.89,Facebook,1.5,Night,Yes,No symptoms,3,4,3,4,3,4.0,3,2025,7,5,18:31:29
+2025-07-05 19:33:24,19,Female,Urban,HSC / A' Level,HSC / A' Level,7.5,0.92,Instagram,3.0,Night,No,Cravings,1,4,3,3,3,4.0,2,2025,7,5,19:33:24
+2025-07-05 20:35:20,20,Female,Urban,Tertiary Education,SSC / O' Level,3.0,0.95,Instagram,4.0,Evening,No,No symptoms,3,3,3,1,3,4.0,3,2025,7,5,20:35:20
+2025-07-05 21:07:16,22,Male,Urban,Tertiary Education,HSC / A' Level,4.5,1.0,Facebook,1.0,Evening,Yes,Cravings,1,1,1,3,5,4.0,1,2025,7,5,21:07:16
+2025-07-05 21:59:41,19,Male,Urban,Tertiary Education,Tertiary Education,4.0,0.7,Facebook,3.0,Night,Yes,Trouble concentrating,3,3,3,3,3,4.0,3,2025,7,5,21:59:41
+2025-07-05 22:14:13,20,Male,Urban,Tertiary Education,SSC / O' Level,6.0,0.95,Facebook,2.0,Afternoon,No,No symptoms,2,1,3,3,3,3.0,2,2025,7,5,22:14:13
+2025-07-05 23:05:26,21,Male,Rural,HSC / A' Level,SSC / O' Level,2.0,0.9,Instagram,2.0,Night,No,Feeling restless,2,2,2,1,4,3.0,2,2025,7,5,23:05:26
+2025-07-06 00:05:20,20,Male,Urban,HSC / A' Level,Tertiary Education,5.5,0.95,Instagram,1.5,Evening,Yes,No symptoms,4,1,1,2,1,3.92,1,2025,7,6,00:05:20
+2025-07-06 00:24:34,19,Female,Urban,Tertiary Education,Tertiary Education,8.0,0.9,YouTube,1.5,Afternoon,Yes,No symptoms,3,3,1,3,3,4.0,1,2025,7,6,00:24:34
+2025-07-06 00:26:55,20,Female,Rural,Tertiary Education,Tertiary Education,4.0,1.0,YouTube,2.5,Evening,Yes,No symptoms,5,3,5,4,5,3.0,5,2025,7,6,00:26:55
+2025-07-06 00:41:04,20,Female,Urban,Tertiary Education,Tertiary Education,2.0,1.0,Instagram,6.0,Night,No,No symptoms,4,3,4,4,4,4.0,3,2025,7,6,00:41:04
+2025-07-06 00:49:21,20,Male,Urban,HSC / A' Level,HSC / A' Level,5.5,0.97,Instagram,6.5,Night,Yes,No symptoms,1,5,3,2,3,4.0,1,2025,7,6,00:49:21
+2025-07-06 08:55:55,19,Female,Urban,Tertiary Education,HSC / A' Level,2.0,1.0,YouTube,1.0,Evening,Yes,No symptoms,5,5,5,5,5,4.0,5,2025,7,6,08:55:55
+2025-07-06 10:54:46,20,Male,Rural,Tertiary Education,SSC / O' Level,3.0,1.0,Other,3.0,Night,Yes,No symptoms,3,2,2,2,2,4.0,1,2025,7,6,10:54:46
+2025-07-06 15:13:54,20,Female,Rural,Tertiary Education,Tertiary Education,2.0,0.95,YouTube,3.0,Night,No,No symptoms,1,2,2,1,1,3.92,1,2025,7,6,15:13:54
+2025-07-06 20:09:17,22,Male,Urban,Tertiary Education,Tertiary Education,2.0,0.8,Facebook,3.0,Night,No,No symptoms,3,4,2,2,2,3.0,3,2025,7,6,20:09:17
+2025-07-06 21:33:21,20,Female,Urban,Tertiary Education,HSC / A' Level,4.0,0.95,Facebook,1.0,Afternoon,No,Trouble concentrating,1,2,1,1,1,4.0,1,2025,7,6,21:33:21
+2025-07-06 22:12:02,19,Male,Urban,Tertiary Education,Tertiary Education,4.0,0.7,Instagram,4.5,Evening,Yes,No symptoms,4,4,2,3,3,4.0,3,2025,7,6,22:12:02
+2025-07-06 23:35:47,21,Female,Urban,Tertiary Education,HSC / A' Level,6.0,1.0,Facebook,8.0,Night,No,Cravings,1,3,1,1,3,4.0,3,2025,7,6,23:35:47
+2025-07-06 23:40:27,20,Male,Urban,Tertiary Education,Tertiary Education,5.0,0.95,YouTube,5.0,Night,Yes,No symptoms,3,3,1,1,5,3.0,1,2025,7,6,23:40:27
+2025-07-06 23:40:27,20,Male,Urban,Tertiary Education,HSC / A' Level,5.0,0.95,Instagram,6.0,Night,Yes,No symptoms,4,3,1,1,4,3.0,2,2025,7,6,23:40:27
+2025-07-07 13:31:40,23,Male,Urban,Tertiary Education,HSC / A' Level,5.0,0.9,Instagram,3.0,Night,Yes,No symptoms,3,1,1,1,1,4.0,1,2025,7,7,13:31:40
+2025-07-07 21:14:54,19,Male,Urban,HSC / A' Level,HSC / A' Level,7.5,0.7,Instagram,3.5,Night,Yes,Feeling restless,3,3,3,3,3,4.0,1,2025,7,7,21:14:54
+2025-07-10 22:50:08,19,Male,Urban,Tertiary Education,HSC / A' Level,4.0,0.8,YouTube,5.0,Afternoon,Yes,No symptoms,3,3,2,3,3,3.0,4,2025,7,10,22:50:08
+2025-07-10 23:17:07,24,Male,Urban,HSC / A' Level,SSC / O' Level,3.0,0.8,Facebook,3.0,Night,Yes,No symptoms,3,5,1,1,3,4.0,3,2025,7,10,23:17:07
+2025-07-11 00:09:00,19,Male,Urban,HSC / A' Level,HSC / A' Level,7.0,0.75,Instagram,3.5,Night,Yes,Feeling restless,5,1,3,1,4,4.0,3,2025,7,11,00:09:00
+2025-07-11 13:08:41,19,Female,Urban,HSC / A' Level,No education,6.0,0.7,YouTube,4.0,Afternoon,Yes,No symptoms,2,1,2,2,1,3.93,4,2025,7,11,13:08:41
+2025-07-11 19:36:42,20,Male,Urban,Tertiary Education,SSC / O' Level,3.0,1.0,Instagram,5.0,Night,No,Cravings,3,2,3,3,2,3.0,5,2025,7,11,19:36:42
+2025-07-11 20:03:49,20,Female,Urban,HSC / A' Level,SSC / O' Level,5.0,1.0,YouTube,4.0,Afternoon,No,No symptoms,2,3,1,1,3,4.0,1,2025,7,11,20:03:49
+2025-07-11 23:19:27,20,Male,Urban,HSC / A' Level,SSC / O' Level,4.0,0.9,Instagram,4.0,Night,Yes,No symptoms,5,3,3,5,3,4.0,1,2025,7,11,23:19:27
+2025-07-12 12:29:11,21,Male,Urban,Tertiary Education,HSC / A' Level,3.5,0.8,Instagram,3.0,Afternoon,No,No symptoms,1,3,1,1,3,4.0,5,2025,7,12,12:29:11
+2025-07-12 13:09:15,21,Male,Urban,HSC / A' Level,HSC / A' Level,1.5,0.95,Instagram,8.0,Night,No,Irritability or agitation,4,3,3,5,4,4.0,5,2025,7,12,13:09:15
+2025-07-13 09:58:22,19,Female,Urban,HSC / A' Level,Tertiary Education,4.5,1.0,Facebook,3.0,Evening,No,No symptoms,2,2,2,2,2,3.67,2,2025,7,13,09:58:22
+2025-07-13 13:55:12,21,Male,Urban,Tertiary Education,Tertiary Education,3.0,0.9,Instagram,5.0,Night,No,No symptoms,2,3,2,4,3,4.0,3,2025,7,13,13:55:12
+2025-07-14 04:50:01,21,Male,Urban,Tertiary Education,Tertiary Education,4.0,0.95,YouTube,2.0,Evening,Yes,No symptoms,1,1,3,3,2,3.0,1,2025,7,14,04:50:01
+2025-07-14 23:01:14,20,Male,Urban,Tertiary Education,Tertiary Education,3.5,0.8,Facebook,7.5,Afternoon,No,No symptoms,2,4,4,3,1,4.0,1,2025,7,14,23:01:14
+2025-08-19 10:49:19,20,Male,Urban,HSC / A' Level,SSC / O' Level,1.0,0.5,Facebook,3.0,Night,No,Irritability or agitation,3,1,1,1,1,3.67,1,2025,8,19,10:49:19
