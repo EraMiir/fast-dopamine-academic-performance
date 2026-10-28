@@ -67,7 +67,7 @@ The complete mathematical formalization of the loss functions ($\mathcal{L}_{\te
 All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, np.random.seed(42)).
 
 |Model / Method|RMSE ($\text{Mean} \pm \text{SD}$)|RMSE $\text{Median}$ ($p_{25}\text{--}p_{75}$)|RMSE $95\%\text{ CI}$ (Bootstrap)|RMSE $p_{95} / p_{99}$|MAE ($\text{Mean} \pm \text{SD}$)|Latency $\text{Median}$ ($p_{95} / p_{99}$)|Guardrail Error Rate|
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|
 |Baseline: Ridge Regression ($\alpha=1.0$)|$0.3338 \pm 0.0245$|$0.3335$ ($0.3177\text{--}0.3510$)|$[0.3233, 0.3441]$|$0.3731 / 0.3768$|$0.2719 \pm 0.0195$|$1.01\text{ ms}$ ($1.08 / 1.12\text{ ms}$)|0%|
 |Gradient Boosting Regressor|$0.2918 \pm 0.0278$|$0.2919$ ($0.2741\text{--}0.3082$)|$[0.2797, 0.3037]$|$0.3402 / 0.3486$|$0.2224 \pm 0.0218$|$75.40\text{ ms}$ ($80.82 / 82.15\text{ ms}$)|0%|
 |Random Forest Regressor (Proposed)|$0.2866 \pm 0.0220$|$0.2926$ ($0.2718\text{--}0.3015$)|$[0.2772, 0.2960]$|$0.3152 / 0.3214$|$0.2311 \pm 0.0184$|$141.85\text{ ms}$ ($158.49 / 161.20\text{ ms}$)|0%|
