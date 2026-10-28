@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir \
     numpy==1.26.4 \
     pandas==2.2.2 \
     scikit-learn==1.4.2 \
+    scipy==1.12.0 \
+    matplotlib==3.8.4 \
+    seaborn==0.13.2 \
     pyyaml==6.0.1 \
     psutil==5.9.8
 
@@ -16,4 +19,4 @@ COPY configs/ ./configs/
 COPY data/ ./data/
 COPY src/ ./src/
 
-CMD ["python", "src/benchmark.py", "--config", "configs/config.yaml"]
+CMD ["python", "src/benchmark.py", "--config", "configs/config.yaml", "--full"]
