@@ -11,10 +11,7 @@ class TestBootstrapCI(unittest.TestCase):
         data = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
 
         low, high = bootstrap_ci(
-            data,
-            n_boot=500,
-            ci=0.95,
-            seed=42,
+            data, n_boot=500, ci=0.95, seed=42
         )
 
         self.assertTrue(np.isfinite(low))
