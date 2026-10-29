@@ -73,6 +73,42 @@ def get_rss_memory_mb() -> float:
             return float(usage / (1024.0 * 1024.0))
         return float(usage / 1024.0)
 
+def sample_train_test_indices(
+    n_rows: int,
+    n_samples: int,
+    test_size: float,
+    seed: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Sample unique source rows and split them without train/test overlap."""
+    if n_rows < 2:
+        raise ValueError("Dataset must contain at least 2 rows.")
+
+    if not 2 <= n_samples <= n_rows:
+        raise ValueError(
+            f"n_samples must be between 2 and {n_rows}; got {n_samples}."
+        )
+
+    if not 0.0 < test_size < 1.0:
+        raise ValueError(
+            f"test_size must be between 0 and 1; got {test_size}."
+        )
+
+    rng = np.random.default_rng(seed)
+
+    # Each original dataset row can be selected only once per run.
+    indices = rng.choice(
+        n_rows,
+        size=n_samples,
+        replace=False,
+    )
+
+    train_size = int((1.0 - test_size) * n_samples)
+    train_size = max(1, min(n_samples - 1, train_size))
+
+    train_idx = indices[:train_size]
+    test_idx = indices[train_size:]
+
+    return train_idx, test_idx
 
 def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = True) -> pd.DataFrame:
     cfg = load_config(config_path)
