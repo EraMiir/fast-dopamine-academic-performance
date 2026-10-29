@@ -1,58 +1,57 @@
+
+import tempfile
 import unittest
-import numpy as np
+from pathlib import Path
 
-from src.benchmark import sample_train_test_indices
+import pandas as pd
+
+from src.benchmark import ensure_dataset, build_models
 
 
-class TestSampleTrainTestIndices(unittest.TestCase):
+class TestEnsureDataset(unittest.TestCase):
+    def test_generates_dataset_with_expected_shape(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "generated.csv"
 
-    def test_train_and_test_do_not_overlap(self):
-        cases = [
-            (256, 64),
-            (256, 128),
-            (256, 192),
-            (256, 256),
-        ]
+            df = ensure_dataset(path, seed=42)
 
-        for n_rows, n_samples in cases:
-            with self.subTest(n_samples=n_samples):
-                train_idx, test_idx = sample_train_test_indices(
-                    n_rows=n_rows,
-                    n_samples=n_samples,
-                    test_size=0.2,
-                    seed=42,
-                )
+            self.assertEqual(len(df), 256)
+            self.assertEqual(
+                set(df.columns),
+                {
+                    "short_video_hours_per_day",
+                    "notification_checks_per_day",
+                    "sleep_hours",
+                    "deep_study_hours",
+                    "attention_span_minutes",
+                    "gpa",
+                },
+            )
+            self.assertTrue(path.exists())
 
-                self.assertEqual(
-                    set(train_idx.tolist())
-                    .intersection(test_idx.tolist()),
-                    set(),
-                )
+    def test_same_seed_produces_same_data(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path1 = Path(tmp) / "first.csv"
+            path2 = Path(tmp) / "second.csv"
 
-                self.assertEqual(
-                    len(np.unique(np.concatenate(
-                        [train_idx, test_idx]
-                    ))),
-                    n_samples,
-                )
+            df1 = ensure_dataset(path1, seed=42)
+            df2 = ensure_dataset(path2, seed=42)
 
-                self.assertGreater(len(train_idx), 0)
-                self.assertGreater(len(test_idx), 0)
+            pd.testing.assert_frame_equal(df1, df2)
 
-    def test_same_seed_gives_same_split(self):
-        first = sample_train_test_indices(256, 128, 0.2, 42)
-        second = sample_train_test_indices(256, 128, 0.2, 42)
 
-        np.testing.assert_array_equal(first[0], second[0])
-        np.testing.assert_array_equal(first[1], second[1])
+class TestBuildModels(unittest.TestCase):
+    def test_builds_three_models(self):
+        models = build_models({}, seed=42)
 
-    def test_rejects_sample_larger_than_dataset(self):
-        with self.assertRaises(ValueError):
-            sample_train_test_indices(10, 11, 0.2, 42)
+        self.assertEqual(
+            set(models.keys()),
+            {"Ridge", "Random Forest", "Gradient Boosting"},
+        )
 
-    def test_rejects_invalid_test_size(self):
-        with self.assertRaises(ValueError):
-            sample_train_test_indices(256, 64, 1.0, 42)
+        for model in models.values():
+            self.assertTrue(hasattr(model, "fit"))
+            self.assertTrue(hasattr(model, "predict"))
 
 
 if __name__ == "__main__":
