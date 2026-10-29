@@ -117,12 +117,47 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Real survey dataset not found at {data_path}")
 
-    df = pd.read_csv(data_path)
-    features = [c for c in cfg["features"]["numeric_features"] if c in df.columns]
-    target = cfg["features"]["target"]
+df = pd.read_csv(data_path)
 
-    X_full = df[features].values
-    y_full = df[target].values
+features = list(cfg["features"]["numeric_features"])
+target = cfg["features"]["target"]
+
+required_columns = features + [target]
+missing_columns = [
+    column for column in required_columns
+    if column not in df.columns
+]
+
+if missing_columns:
+    raise ValueError(
+        f"Dataset is missing required columns: {missing_columns}"
+    )
+
+if len(df) < 2:
+    raise ValueError("Dataset must contain at least 2 rows.")
+
+X_df = df.loc[:, features].apply(pd.to_numeric, errors="coerce")
+y_series = pd.to_numeric(df[target], errors="coerce")
+
+X_full = X_df.to_numpy(dtype=np.float64)
+y_full = y_series.to_numpy(dtype=np.float64)
+
+if not np.isfinite(X_full).all():
+    bad_features = [
+        column
+        for column in features
+        if not np.isfinite(
+            X_df[column].to_numpy(dtype=np.float64)
+        ).all()
+    ]
+    raise ValueError(
+        f"Features contain missing or non-finite values: {bad_features}"
+    )
+
+if not np.isfinite(y_full).all():
+    raise ValueError(
+        f"Target '{target}' contains missing or non-finite values."
+    )
 
     base_seed = int(cfg["random_seed"])
     warmup_runs = int(cfg.get("warmup_runs", 3))
