@@ -95,7 +95,6 @@ def sample_train_test_indices(
 
     rng = np.random.default_rng(seed)
 
-    # Each original dataset row can be selected only once per run.
     indices = rng.choice(
         n_rows,
         size=n_samples,
@@ -188,14 +187,18 @@ if not np.isfinite(y_full).all():
             for i in range(total_iters):
                 phase = "warmup" if i < warmup_runs else "evaluation"
                 seed = base_seed + i * 7 + int(n_samples)
-                rng = np.random.default_rng(seed)
-                idx = rng.choice(len(df), size=int(n_samples), replace=True)
-                X_sub = X_full[idx]
-                y_sub = y_full[idx]
+                train_idx, test_idx = sample_train_test_indices(
+                n_rows=len(df),
+                n_samples=int(n_samples),
+                test_size=float(cfg["test_size"]),
+                seed=seed,
+                )
 
-                split = max(1, int((1.0 - float(cfg["test_size"])) * len(X_sub)))
-                X_tr, X_te = X_sub[:split], X_sub[split:]
-                y_tr, y_te = y_sub[:split], y_sub[split:]
+                X_tr = X_full[train_idx]
+                X_te = X_full[test_idx]
+
+                y_tr = y_full[train_idx]
+                y_te = y_full[test_idx]
 
                 model = model_fn(seed)
                 t0 = time.perf_counter()
