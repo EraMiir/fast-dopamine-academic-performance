@@ -4,8 +4,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from benchmark import load_config
-from process_data import bootstrap_ci
+try:
+    from src.benchmark import load_config
+    from src.process_data import bootstrap_ci
+except ModuleNotFoundError:
+    from benchmark import load_config
+    from process_data import bootstrap_ci
 
 
 def generate_all_plots(

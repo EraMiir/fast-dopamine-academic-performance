@@ -66,16 +66,19 @@ The complete mathematical formalization of the loss functions ($\mathcal{L}_{\te
 
 All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, np.random.seed(42)).
 
-|Model / Method|RMSE ($\text{Mean} \pm \text{SD}$)|RMSE $\text{Median}$ ($p_{25}\text{--}p_{75}$)|RMSE $95\%\text{ CI}$ (Bootstrap)|RMSE $p_{95} / p_{99}$|MAE ($\text{Mean} \pm \text{SD}$)|Latency $\text{Median}$ ($p_{95} / p_{99}$)|Guardrail Error Rate|
-|---|---|---|---|---|---|---|---|
-|Baseline: Ridge Regression ($\alpha=1.0$)|$0.3338 \pm 0.0245$|$0.3335$ ($0.3177\text{--}0.3510$)|$[0.3233, 0.3441]$|$0.3731 / 0.3768$|$0.2719 \pm 0.0195$|$1.01\text{ ms}$ ($1.08 / 1.12\text{ ms}$)|0%|
-|Gradient Boosting Regressor|$0.2918 \pm 0.0278$|$0.2919$ ($0.2741\text{--}0.3082$)|$[0.2797, 0.3037]$|$0.3402 / 0.3486$|$0.2224 \pm 0.0218$|$75.40\text{ ms}$ ($80.82 / 82.15\text{ ms}$)|0%|
-|Random Forest Regressor (Proposed)|$0.2866 \pm 0.0220$|$0.2926$ ($0.2718\text{--}0.3015$)|$[0.2772, 0.2960]$|$0.3152 / 0.3214$|$0.2311 \pm 0.0184$|$141.85\text{ ms}$ ($158.49 / 161.20\text{ ms}$)|0%|
+|Model / Method|RMSE Mean ± SD|RMSE Median (p25–p75)|RMSE 95% CI|RMSE p95 / p99|MAE Mean ± SD|Latency Median (p95 / p99)|Error Rate|
+|---|---:|---:|---:|---:|---:|---:|---:|
+|Baseline: Ridge Regression|0.3338 ± 0.0245|0.3335 (0.3129–0.3500)|[0.3233, 0.3442]|0.3731 / 0.3766|0.2677 ± 0.0206|1.07 ms (1.49 / 1.60 ms)|0.0%|
+|Gradient Boosting Regressor|0.2918 ± 0.0278|0.2919 (0.2850–0.3043)|[0.2793, 0.3038]|0.3402 / 0.3425|0.2192 ± 0.0218|80.64 ms (94.74 / 96.93 ms)|0.0%|
+|Random Forest Regressor|0.2866 ± 0.0220|0.2926 (0.2735–0.3009)|[0.2771, 0.2956]|0.3153 / 0.3160|0.2221 ± 0.0172|173.45 ms (186.63 / 187.36 ms)|0.0%|
 
-### 5.2. Key Scientific Findings & Methodological Notes
-1. Confirmation of Alternative Hypothesis ($H_1$): At $N = 256$, non-linear tree ensembles outperform the linear Ridge Regression baseline ($\text{RMSE} = 0.3338$). RandomForestRegressor reduces mean $\text{RMSE}$ by $14.1\%$ ($0.2866$, $95\%\text{ CI } [0.2771, 0.2956]$), and GradientBoostingRegressor reduces $\text{RMSE}$ by $12.6\%$ ($0.2918$, $95\%\text{ CI } [0.2793, 0.3038]$) while achieving the lowest $\text{MAE}$ ($0.2192$). Because the $95\%$ bootstrap confidence intervals of both ensembles lie entirely below the baseline interval, $H_0$ is rejected.
-2. Statistical & Sampling Variance Note: Each condition evaluates $n = 20$ seeded bootstrap resamples of size $N \in \{64, 128, 192, 256\}$ (an 80/20 train/test split per resample). Consequently, the reported dispersion ($\text{SD}$, $p_{25}\text{--}p_{75}$, and $95\%\text{ CI}$) reflects both data-sampling variability across student subsets and runtime jitter for execution latency.
-3. Latency–Accuracy Trade-off & Guardrail Compliance: Ensemble models increase median execution latency from $1.07\text{ ms}$ (Ridge) to $80.64\text{ ms}$ (GradientBoosting) and $173.45\text{ ms}$ (RandomForest), while remaining well within the Guardrail limits ($\text{Latency} \le 2000\text{ ms}$, real process $\text{RSS RAM} \le 512\text{ MB}$) with a $0.0\%$ guardrail error rate.
+### 5.2. Key Findings & Methodological Notes
+
+1. **Prediction accuracy:** the lowest mean RMSE at sample size 256 is achieved by **Random Forest Regressor** (0.2866 GPA points; 95% bootstrap CI [0.2771, 0.2956]).
+2. **Comparison with baseline:** the reduction in mean RMSE relative to Ridge is 14.1%.
+3. **Uncertainty:** confidence intervals and dispersion statistics are reported in the table above. Interval overlap should not be treated as a formal hypothesis test.
+4. **Runtime:** latency is reported in milliseconds. The median, 95th and 99th percentiles are shown above to make runtime variability visible.
+
 ## 6. Quickstart & Reproducibility Guide
 
 ```bash
