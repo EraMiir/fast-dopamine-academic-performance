@@ -50,6 +50,76 @@ DEFAULT_CONFIG = {
 }
 
 
+
+def ensure_dataset(path: str | Path, seed: int = 42) -> pd.DataFrame:
+    """Create a reproducible synthetic dataset for tests and demonstrations."""
+    path = Path(path)
+    if path.exists():
+        return pd.read_csv(path)
+
+    rng = np.random.default_rng(seed)
+    n = 256
+
+    short_video = np.clip(rng.gamma(2.0, 1.0, n), 0, 8)
+    notifications = np.clip(rng.poisson(35, n), 0, 150)
+    sleep = np.clip(rng.normal(7.2, 1.1, n), 3.5, 10)
+    deep_study = np.clip(rng.normal(3.0, 1.0, n), 0.2, 7)
+    attention = np.clip(rng.normal(35, 10, n), 8, 70)
+
+    noise = rng.normal(0, 0.25, n)
+    gpa = (
+        2.2
+        + 0.18 * deep_study
+        + 0.07 * (sleep - 7)
+        - 0.09 * short_video
+        - 0.002 * notifications
+        + 0.008 * attention
+        + noise
+    )
+    gpa = np.clip(gpa, 1.0, 4.0)
+
+    df = pd.DataFrame({
+        "short_video_hours_per_day": short_video,
+        "notification_checks_per_day": notifications,
+        "sleep_hours": sleep,
+        "deep_study_hours": deep_study,
+        "attention_span_minutes": attention,
+        "gpa": gpa,
+    })
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(path, index=False)
+    return df
+
+
+def build_models(config: dict | None = None, seed: int = 42) -> dict:
+    """Build the three configured regression models."""
+    config = config or {}
+    model_cfg = config.get("models", config)
+
+    ridge_cfg = model_cfg.get("baseline_ridge", {})
+    rf_cfg = model_cfg.get("random_forest", {})
+    gb_cfg = model_cfg.get("gradient_boosting", {})
+
+    return {
+        "Ridge": Ridge(
+            alpha=ridge_cfg.get("alpha", 1.0)
+        ),
+        "Random Forest": RandomForestRegressor(
+            n_estimators=rf_cfg.get("n_estimators", 100),
+            max_depth=rf_cfg.get("max_depth", 5),
+            random_state=seed,
+            n_jobs=-1,
+        ),
+        "Gradient Boosting": GradientBoostingRegressor(
+            n_estimators=gb_cfg.get("n_estimators", 100),
+            learning_rate=gb_cfg.get("learning_rate", 0.05),
+            max_depth=gb_cfg.get("max_depth", 3),
+            random_state=seed,
+        ),
+    }
+
+
 def load_config(config_path: str = "configs/config.yaml") -> dict:
     if os.path.exists(config_path):
         try:
@@ -116,130 +186,130 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Real survey dataset not found at {data_path}")
 
-df = pd.read_csv(data_path)
+    df = pd.read_csv(data_path)
 
-features = list(cfg["features"]["numeric_features"])
-target = cfg["features"]["target"]
+    features = list(cfg["features"]["numeric_features"])
+    target = cfg["features"]["target"]
 
-required_columns = features + [target]
-missing_columns = [
-    column for column in required_columns
-    if column not in df.columns
-]
-
-if missing_columns:
-    raise ValueError(
-        f"Dataset is missing required columns: {missing_columns}"
-    )
-
-if len(df) < 2:
-    raise ValueError("Dataset must contain at least 2 rows.")
-
-X_df = df.loc[:, features].apply(pd.to_numeric, errors="coerce")
-y_series = pd.to_numeric(df[target], errors="coerce")
-
-X_full = X_df.to_numpy(dtype=np.float64)
-y_full = y_series.to_numpy(dtype=np.float64)
-
-if not np.isfinite(X_full).all():
-    bad_features = [
-        column
-        for column in features
-        if not np.isfinite(
-            X_df[column].to_numpy(dtype=np.float64)
-        ).all()
+    required_columns = features + [target]
+    missing_columns = [
+        column for column in required_columns
+        if column not in df.columns
     ]
-    raise ValueError(
-        f"Features contain missing or non-finite values: {bad_features}"
-    )
 
-if not np.isfinite(y_full).all():
-    raise ValueError(
-        f"Target '{target}' contains missing or non-finite values."
-    )
+    if missing_columns:
+        raise ValueError(
+            f"Dataset is missing required columns: {missing_columns}"
+        )
 
-    base_seed = int(cfg["random_seed"])
-    warmup_runs = int(cfg.get("warmup_runs", 3))
-    eval_runs = int(cfg.get("evaluation_runs", 20))
-    load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
+    if len(df) < 2:
+        raise ValueError("Dataset must contain at least 2 rows.")
 
-    models_cfg = {
-        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
-        "RandomForest": lambda s: RandomForestRegressor(
-            n_estimators=cfg["models"]["random_forest"]["n_estimators"],
-            max_depth=cfg["models"]["random_forest"]["max_depth"],
-            random_state=s,
-        ),
-        "GradientBoosting": lambda s: GradientBoostingRegressor(
-            n_estimators=cfg["models"]["gradient_boosting"]["n_estimators"],
-            learning_rate=cfg["models"]["gradient_boosting"]["learning_rate"],
-            max_depth=cfg["models"]["gradient_boosting"]["max_depth"],
-            random_state=s,
-        ),
-    }
+    X_df = df.loc[:, features].apply(pd.to_numeric, errors="coerce")
+    y_series = pd.to_numeric(df[target], errors="coerce")
 
-    raw_records = []
-    run_id = 0
-    total_iters = warmup_runs + eval_runs
+    X_full = X_df.to_numpy(dtype=np.float64)
+    y_full = y_series.to_numpy(dtype=np.float64)
 
-    for model_name, model_fn in models_cfg.items():
-        for n_samples in load_levels:
-            for i in range(total_iters):
-                phase = "warmup" if i < warmup_runs else "evaluation"
-                seed = base_seed + i * 7 + int(n_samples)
-                train_idx, test_idx = sample_train_test_indices(
-                n_rows=len(df),
-                n_samples=int(n_samples),
-                test_size=float(cfg["test_size"]),
-                seed=seed,
-                )
+    if not np.isfinite(X_full).all():
+        bad_features = [
+            column
+            for column in features
+            if not np.isfinite(
+                X_df[column].to_numpy(dtype=np.float64)
+            ).all()
+        ]
+        raise ValueError(
+            f"Features contain missing or non-finite values: {bad_features}"
+        )
 
-                X_tr = X_full[train_idx]
-                X_te = X_full[test_idx]
+    if not np.isfinite(y_full).all():
+        raise ValueError(
+            f"Target '{target}' contains missing or non-finite values."
+        )
 
-                y_tr = y_full[train_idx]
-                y_te = y_full[test_idx]
+        base_seed = int(cfg["random_seed"])
+        warmup_runs = int(cfg.get("warmup_runs", 3))
+        eval_runs = int(cfg.get("evaluation_runs", 20))
+        load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
 
-                model = model_fn(seed)
-                t0 = time.perf_counter()
-                model.fit(X_tr, y_tr)
-                preds = model.predict(X_te)
-                latency_ms = (time.perf_counter() - t0) * 1000.0
+        models_cfg = {
+            "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
+            "RandomForest": lambda s: RandomForestRegressor(
+                n_estimators=cfg["models"]["random_forest"]["n_estimators"],
+                max_depth=cfg["models"]["random_forest"]["max_depth"],
+                random_state=s,
+            ),
+            "GradientBoosting": lambda s: GradientBoostingRegressor(
+                n_estimators=cfg["models"]["gradient_boosting"]["n_estimators"],
+                learning_rate=cfg["models"]["gradient_boosting"]["learning_rate"],
+                max_depth=cfg["models"]["gradient_boosting"]["max_depth"],
+                random_state=s,
+            ),
+        }
 
-                ram_mb = get_rss_memory_mb()
-                rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
-                mae = float(mean_absolute_error(y_te, preds))
-                r2 = float(r2_score(y_te, preds)) if len(y_te) > 1 else 0.0
+        raw_records = []
+        run_id = 0
+        total_iters = warmup_runs + eval_runs
 
-                error_rate = 0.0 if (
-                    latency_ms <= cfg["guardrails"]["max_latency_ms"]
-                    and ram_mb <= cfg["guardrails"]["max_ram_mb"]
-                    and not np.isnan(rmse)
-                ) else 1.0
+        for model_name, model_fn in models_cfg.items():
+            for n_samples in load_levels:
+                for i in range(total_iters):
+                    phase = "warmup" if i < warmup_runs else "evaluation"
+                    seed = base_seed + i * 7 + int(n_samples)
+                    train_idx, test_idx = sample_train_test_indices(
+                    n_rows=len(df),
+                    n_samples=int(n_samples),
+                    test_size=float(cfg["test_size"]),
+                    seed=seed,
+                    )
 
-                raw_records.append({
-                    "run_id": run_id,
-                    "phase": phase,
-                    "iteration": i,
-                    "model": model_name,
-                    "sample_size": int(n_samples),
-                    "RMSE": round(rmse, 4),
-                    "MAE": round(mae, 4),
-                    "R2": round(r2, 4),
-                    "latency_ms": round(latency_ms, 3),
-                    "ram_mb": round(ram_mb, 2),
-                    "error_rate": error_rate,
-                })
-                run_id += 1
+                    X_tr = X_full[train_idx]
+                    X_te = X_full[test_idx]
 
-    out_jsonl = Path(cfg["paths"]["raw_jsonl"])
-    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_jsonl, "w", encoding="utf-8") as f:
-        for r in raw_records:
-            f.write(json.dumps(r) + "\n")
+                    y_tr = y_full[train_idx]
+                    y_te = y_full[test_idx]
 
-    print(f"Saved {len(raw_records)} benchmark records to {out_jsonl}")
-    return pd.DataFrame(raw_records)
+                    model = model_fn(seed)
+                    t0 = time.perf_counter()
+                    model.fit(X_tr, y_tr)
+                    preds = model.predict(X_te)
+                    latency_ms = (time.perf_counter() - t0) * 1000.0
+
+                    ram_mb = get_rss_memory_mb()
+                    rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
+                    mae = float(mean_absolute_error(y_te, preds))
+                    r2 = float(r2_score(y_te, preds)) if len(y_te) > 1 else 0.0
+
+                    error_rate = 0.0 if (
+                        latency_ms <= cfg["guardrails"]["max_latency_ms"]
+                        and ram_mb <= cfg["guardrails"]["max_ram_mb"]
+                        and not np.isnan(rmse)
+                    ) else 1.0
+
+                    raw_records.append({
+                        "run_id": run_id,
+                        "phase": phase,
+                        "iteration": i,
+                        "model": model_name,
+                        "sample_size": int(n_samples),
+                        "RMSE": round(rmse, 4),
+                        "MAE": round(mae, 4),
+                        "R2": round(r2, 4),
+                        "latency_ms": round(latency_ms, 3),
+                        "ram_mb": round(ram_mb, 2),
+                        "error_rate": error_rate,
+                    })
+                    run_id += 1
+
+        out_jsonl = Path(cfg["paths"]["raw_jsonl"])
+        out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_jsonl, "w", encoding="utf-8") as f:
+            for r in raw_records:
+                f.write(json.dumps(r) + "\n")
+
+        print(f"Saved {len(raw_records)} benchmark records to {out_jsonl}")
+        return pd.DataFrame(raw_records)
 
 
 if __name__ == "__main__":

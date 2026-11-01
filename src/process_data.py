@@ -2,17 +2,38 @@ import argparse
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from benchmark import load_config
+try:
+    from src.benchmark import load_config
+except ModuleNotFoundError:
+    from benchmark import load_config
 
 
-def bootstrap_ci(values: np.ndarray, n_boot: int = 1000, seed: int = 42) -> tuple[float, float]:
-    """Compute 95% non-parametric bootstrap confidence interval for the mean."""
+def bootstrap_ci(
+    values: np.ndarray,
+    n_boot: int = 1000,
+    ci: float = 0.95,
+    seed: int = 42,
+) -> tuple[float, float]:
+    """Compute a reproducible non-parametric bootstrap CI for the mean."""
+    values = np.asarray(values, dtype=float)
+    values = values[np.isfinite(values)]
+
+    if values.size == 0:
+        return float("nan"), float("nan")
+    if n_boot < 1:
+        raise ValueError("n_boot must be at least 1.")
+    if not 0.0 < ci < 1.0:
+        raise ValueError("ci must be between 0 and 1.")
+
     rng = np.random.default_rng(seed)
-    boot_means = [
-        np.mean(rng.choice(values, size=len(values), replace=True))
-        for _ in range(n_boot)
-    ]
-    return float(np.percentile(boot_means, 2.5)), float(np.percentile(boot_means, 97.5))
+    boot_means = np.mean(
+        rng.choice(values, size=(n_boot, values.size), replace=True),
+        axis=1,
+    )
+
+    alpha = (1.0 - ci) / 2.0
+    low, high = np.quantile(boot_means, [alpha, 1.0 - alpha])
+    return float(low), float(high)
 
 
 def process_benchmark_logs(
