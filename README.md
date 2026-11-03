@@ -94,3 +94,10 @@ python src/process_data.py --config configs/config.yaml
 # 4. Generate publication-ready PDF and 300 DPI PNG figures in reports/figures/
 python src/visualize.py --config configs/config.yaml
 ```
+
+
+## Scientific Visualizations
+
+![Latency vs Load](reports/figures/fig1_latency_vs_load.png)
+
+![Distribution Boxplot](reports/figures/fig2_distribution_boxplot.png)
