@@ -101,3 +101,23 @@ python src/visualize.py --config configs/config.yaml
 ![Latency vs Load](reports/figures/fig1_latency_vs_load.png)
 
 ![Distribution Boxplot](reports/figures/fig2_distribution_boxplot.png)
+
+<!-- FEATURE_GPA_ANALYSIS_START -->
+## 5.3. Exploratory Feature–GPA Relationship Analysis
+
+Spearman rank correlation was used to examine monotonic associations between selected survey factors and GPA. Pearson correlation is also reported as a supplementary measure. 95% confidence intervals for Spearman's rho were estimated using 2,000 bootstrap resamples (random seed = 42).
+
+| Factor | N | Spearman's rho | 95% bootstrap CI | p-value | Pearson's r | Direction |
+|---|---:|---:|---:|---:|---:|---|
+| Study time (hours) | 256 | 0.302 | [0.192, 0.409] | 0.0000 | 0.280 | Positive |
+| Attendance rate | 256 | 0.235 | [0.119, 0.349] | 0.0001 | 0.282 | Positive |
+| Academic social media distraction | 256 | -0.175 | [-0.298, -0.052] | 0.0051 | -0.154 | Negative |
+| Sleep disturbance | 256 | -0.090 | [-0.213, 0.039] | 0.1511 | -0.090 | Weak / near zero |
+| Social media time (hours) | 256 | -0.046 | [-0.161, 0.069] | 0.4599 | -0.056 | Weak / near zero |
+
+**Interpretation:** Positive coefficients indicate that higher factor values tend to occur with higher GPA; negative coefficients indicate that higher factor values tend to occur with lower GPA. Coefficients near zero indicate weak monotonic association.
+
+**Important limitation:** These are observational correlations, not evidence of causation. They do not establish that a factor causes GPA to increase or decrease. Statistical significance should be interpreted cautiously because several factors are examined.
+
+Full results: `data/processed/feature_gpa_correlations.csv`.
+<!-- FEATURE_GPA_ANALYSIS_END -->
