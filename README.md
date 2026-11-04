@@ -103,7 +103,7 @@ python src/visualize.py --config configs/config.yaml
 ![Distribution Boxplot](reports/figures/fig2_distribution_boxplot.png)
 
 <!-- FEATURE_GPA_ANALYSIS_START -->
-## 5.3. Exploratory Feature–GPA Relationship Analysis
+## 7 Exploratory Feature–GPA Relationship Analysis
 
 Spearman rank correlation was used to examine monotonic associations between selected survey factors and GPA. Pearson correlation is also reported as a supplementary measure. 95% confidence intervals for Spearman's rho were estimated using 2,000 bootstrap resamples (random seed = 42).
 
