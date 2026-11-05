@@ -15,39 +15,55 @@ This repository contains the end-to-end benchmarking, statistical aggregation, a
 
 ---
 
+## cleaning dataset
+
+|Variable|How did they respond?|What We Did|
+|---|---|---|
+|Age|**21 years old**, **dd/mm/1999**|The number was extracted by converting to age (2025 − year)|
+|StudyH|**3/4h**, **2 hrs**, **30 mins**|Extracted the time, minutes /60, ranges to average|
+|Attend|**85%**, **0.9**, **90**|Converted to a fraction between 0 and 1|
+|SM_hours|**less than 2**, **3-4 hours**, **20%**|Same as for StudyH|
+|GPA|**4.0 and 5.0 scales**, **letters (A, B+, etc.)**|Everything on a 4.0 scale, Rows without a recognizable GPA have been removed|
+
 ## 2. Final Repository Directory Structure
 
 ```text
 fast-dopamine-academic-performance/
 ├── configs/
-│   └── config.yaml                     # Experiment hyperparameters and guardrail thresholds
+│   └── config.yaml
 ├── data/
 │   ├── raw/
-│   │   └── test_run.jsonl              # Raw benchmark logs (separated into warmup and evaluation runs)
+│   │   ├── survey.csv
+│   │   └── test_run.jsonl
 │   ├── processed/
-│   │   └── metrics_summary.csv         # Cleaned and aggregated statistical metrics (Mean, SD, Median, p95, p99, 95% CI)
+│   │   ├── feature_gpa_correlations.csv
+│   │   └── metrics_summary.csv
 │   ├── sample/
-│   │   └── sample_survey.csv           # 10-row micro-sample for smoke testing
-│   └── cleaned_survey.csv              # Full preprocessed survey dataset (N = 256, 24 features)
+│   │   └── sample_survey.csv
+│   └── cleaned_survey.csv
 ├── docs/
-│   └── domain_model.md                 # Formal LaTeX Loss/Metric Equations & C4 Telemetry Diagram
+│   ├── README.md
+│   └── domain_model.md
 ├── notebooks/
-│   └── 01_data_analysis.ipynb          # Reproducible Jupyter Notebook (executed in sequential order)
+│   ├── 01_data_analysis.ipynb
+│   ├── data_cleaning.ipynb
+│   └── README.md
 ├── reports/
 │   └── figures/
-│       ├── fig1_latency_vs_load.pdf    # Vector publication plot: Latency & RMSE vs. Load
-│       ├── fig1_latency_vs_load.png    # 300 DPI raster plot: Latency & RMSE vs. Load
-│       ├── fig2_distribution_boxplot.pdf # Vector publication plot: Metric Distributions & 95% CI
-│       └── fig2_distribution_boxplot.png # 300 DPI raster plot: Metric Distributions & 95% CI
+│       ├── fig1_latency_vs_load.pdf
+│       ├── fig1_latency_vs_load.png
+│       ├── fig2_distribution_boxplot.pdf
+│       └── fig2_distribution_boxplot.png
 ├── src/
-│   ├── benchmark.py                    # Benchmark execution script
-│   ├── process_data.py                 # Warm-up filtering and 1000-iteration bootstrap aggregation module
-│   └── visualize.py                    # Scientific visualization generator (colorblind-safe, 300 DPI + PDF)
-├── .gitignore                          # Excludes .ipynb_checkpoints, __pycache__, .venv, and raw dumps
-├── Dockerfile                          # Reproducible Docker container with exact dependency pins
-├── requirements.txt                    # Pinned Python dependencies
-├── LICENSE                             # MIT License
-└── README.md                           # Final report with Results & Discussion, plots, and domain model
+│   ├── analyze_relationships.py
+│   ├── benchmark.py
+│   ├── process_data.py
+│   └── visualize.py
+├── .gitignore
+├── Dockerfile
+├── LICENSE
+├── README.md
+└── requirements.txt
 ```
 
 ## 3. Planned Benchmarks & Metrics Matrix
