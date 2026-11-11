@@ -239,8 +239,13 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
     eval_runs = int(cfg.get("evaluation_runs", 20))
     load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
 
+    if warmup_runs < 0 or eval_runs < 1:
+        raise ValueError("warmup_runs must be non-negative and evaluation_runs must be at least 1.")
+    if not load_levels or any(int(n) < 2 or int(n) > len(df) for n in load_levels):
+        raise ValueError(f"Each load level must be between 2 and the dataset size ({len(df)}).")
+
     models_cfg = {
-        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
+        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"]),
         "RandomForest": lambda s: RandomForestRegressor(
             n_estimators=cfg["models"]["random_forest"]["n_estimators"],
             max_depth=cfg["models"]["random_forest"]["max_depth"],
