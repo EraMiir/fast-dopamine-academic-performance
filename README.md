@@ -80,6 +80,8 @@ The complete mathematical formalization of the loss functions ($\mathcal{L}_{\te
 ## 5. Results & Discussion
 ### 5.1. Summary Benchmark Table ($N = 256$ Full Workload, Cold-Start Warm-up Filtered)
 
+The table below reports the previously committed benchmark summary. The intended protocol is 3 warm-up runs and 20 evaluation repetitions per model and load level (240 evaluation runs total across 3 models and 4 load levels). After checking out this repair branch, rerun the commands in Section 6 to regenerate the raw logs, summary CSV, and figures. The existing committed CSV and figures are not outputs of the repaired script.
+
 All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, np.random.seed(42)).
 
 |Model / Method|RMSE Mean ± SD|RMSE Median (p25–p75)|RMSE 95% CI|RMSE p95 / p99|MAE Mean ± SD|Latency Median (p95 / p99)|Error Rate|
