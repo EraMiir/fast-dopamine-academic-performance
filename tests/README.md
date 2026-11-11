@@ -1,0 +1,3 @@
+# Tests
+
+Run the unit tests from the repository root with `python -m unittest discover -s tests -v`.
