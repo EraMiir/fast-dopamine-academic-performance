@@ -7,6 +7,8 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from sklearn.linear_model import Ridge
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
@@ -102,9 +104,10 @@ def build_models(config: dict | None = None, seed: int = 42) -> dict:
     gb_cfg = model_cfg.get("gradient_boosting", {})
 
     return {
-        "Ridge": Ridge(
-            alpha=ridge_cfg.get("alpha", 1.0)
-        ),
+        "Ridge": Pipeline([
+            ("scaler", StandardScaler()),
+            ("ridge", Ridge(alpha=ridge_cfg.get("alpha", 1.0))),
+        ]),
         "Random Forest": RandomForestRegressor(
             n_estimators=rf_cfg.get("n_estimators", 100),
             max_depth=rf_cfg.get("max_depth", 5),
@@ -245,7 +248,10 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
         raise ValueError(f"Each load level must be between 2 and the dataset size ({len(df)}).")
 
     models_cfg = {
-        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"]),
+        "Baseline_Ridge": lambda s: Pipeline([
+            ("scaler", StandardScaler()),
+            ("ridge", Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"])),
+        ]),
         "RandomForest": lambda s: RandomForestRegressor(
             n_estimators=cfg["models"]["random_forest"]["n_estimators"],
             max_depth=cfg["models"]["random_forest"]["max_depth"],

@@ -1,0 +1,40 @@
+name: Reproducible experiments
+on:
+  push:
+    branches:
+      - fix/scaled-ridge-model-comparison
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run benchmark on the committed survey dataset
+        run: python src/benchmark.py --config configs/config.yaml --full
+      - name: Aggregate benchmark metrics
+        run: python src/process_data.py --config configs/config.yaml
+      - name: Regenerate benchmark figures
+        run: python src/visualize.py --config configs/config.yaml
+      - name: Compare academic-only and full feature sets
+        run: python src/compare_feature_sets.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Upload experiment outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproducible-experiment-results
+          path: |
+            data/raw/test_run.jsonl
+            data/processed/metrics_summary.csv
+            data/processed/feature_set_comparison.csv
+            data/processed/feature_set_comparison_summary.csv
+            reports/figures/
