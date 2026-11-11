@@ -37,7 +37,8 @@ fast-dopamine-academic-performance/
 │   │   └── test_run.jsonl
 │   ├── processed/
 │   │   ├── feature_gpa_correlations.csv
-│   │   └── metrics_summary.csv
+│   ├── feature_set_comparison_summary.csv
+│   └── metrics_summary.csv
 │   ├── sample/
 │   │   └── sample_survey.csv
 │   └── cleaned_survey.csv
@@ -54,9 +55,13 @@ fast-dopamine-academic-performance/
 │       ├── fig1_latency_vs_load.png
 │       ├── fig2_distribution_boxplot.pdf
 │       └── fig2_distribution_boxplot.png
+├── .github/
+│   └── workflows/
+│       └── reproducible-experiments.yml
 ├── src/
 │   ├── analyze_relationships.py
 │   ├── benchmark.py
+│   ├── compare_feature_sets.py
 │   ├── process_data.py
 │   └── visualize.py
 ├── .gitignore
