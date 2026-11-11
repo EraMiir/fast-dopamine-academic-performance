@@ -187,9 +187,12 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
         raise FileNotFoundError(f"Real survey dataset not found at {data_path}")
 
     df = pd.read_csv(data_path)
+    # Normalize header whitespace because the source CSV contains trailing spaces
+    # in several survey column names.
+    df.columns = df.columns.astype(str).str.strip()
 
-    features = list(cfg["features"]["numeric_features"])
-    target = cfg["features"]["target"]
+    features = [str(column).strip() for column in cfg["features"]["numeric_features"]]
+    target = str(cfg["features"]["target"]).strip()
 
     required_columns = features + [target]
     missing_columns = [
@@ -228,88 +231,91 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
             f"Target '{target}' contains missing or non-finite values."
         )
 
-        base_seed = int(cfg["random_seed"])
-        warmup_runs = int(cfg.get("warmup_runs", 3))
-        eval_runs = int(cfg.get("evaluation_runs", 20))
-        load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
+    if np.any((y_full < 0.0) | (y_full > 4.0)):
+        raise ValueError("GPA target must be within the documented 0.0–4.0 scale.")
 
-        models_cfg = {
-            "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
-            "RandomForest": lambda s: RandomForestRegressor(
-                n_estimators=cfg["models"]["random_forest"]["n_estimators"],
-                max_depth=cfg["models"]["random_forest"]["max_depth"],
-                random_state=s,
-            ),
-            "GradientBoosting": lambda s: GradientBoostingRegressor(
-                n_estimators=cfg["models"]["gradient_boosting"]["n_estimators"],
-                learning_rate=cfg["models"]["gradient_boosting"]["learning_rate"],
-                max_depth=cfg["models"]["gradient_boosting"]["max_depth"],
-                random_state=s,
-            ),
-        }
+    base_seed = int(cfg["random_seed"])
+    warmup_runs = int(cfg.get("warmup_runs", 3))
+    eval_runs = int(cfg.get("evaluation_runs", 20))
+    load_levels = cfg.get("load_levels", [64, 128, 192, 256]) if use_full else [len(df)]
 
-        raw_records = []
-        run_id = 0
-        total_iters = warmup_runs + eval_runs
+    models_cfg = {
+        "Baseline_Ridge": lambda s: Ridge(alpha=cfg["models"]["baseline_ridge"]["alpha"], random_state=s),
+        "RandomForest": lambda s: RandomForestRegressor(
+            n_estimators=cfg["models"]["random_forest"]["n_estimators"],
+            max_depth=cfg["models"]["random_forest"]["max_depth"],
+            random_state=s,
+        ),
+        "GradientBoosting": lambda s: GradientBoostingRegressor(
+            n_estimators=cfg["models"]["gradient_boosting"]["n_estimators"],
+            learning_rate=cfg["models"]["gradient_boosting"]["learning_rate"],
+            max_depth=cfg["models"]["gradient_boosting"]["max_depth"],
+            random_state=s,
+        ),
+    }
 
-        for model_name, model_fn in models_cfg.items():
-            for n_samples in load_levels:
-                for i in range(total_iters):
-                    phase = "warmup" if i < warmup_runs else "evaluation"
-                    seed = base_seed + i * 7 + int(n_samples)
-                    train_idx, test_idx = sample_train_test_indices(
-                    n_rows=len(df),
-                    n_samples=int(n_samples),
-                    test_size=float(cfg["test_size"]),
-                    seed=seed,
-                    )
+    raw_records = []
+    run_id = 0
+    total_iters = warmup_runs + eval_runs
 
-                    X_tr = X_full[train_idx]
-                    X_te = X_full[test_idx]
+    for model_name, model_fn in models_cfg.items():
+        for n_samples in load_levels:
+            for i in range(total_iters):
+                phase = "warmup" if i < warmup_runs else "evaluation"
+                seed = base_seed + i * 7 + int(n_samples)
+                train_idx, test_idx = sample_train_test_indices(
+                n_rows=len(df),
+                n_samples=int(n_samples),
+                test_size=float(cfg["test_size"]),
+                seed=seed,
+                )
 
-                    y_tr = y_full[train_idx]
-                    y_te = y_full[test_idx]
+                X_tr = X_full[train_idx]
+                X_te = X_full[test_idx]
 
-                    model = model_fn(seed)
-                    t0 = time.perf_counter()
-                    model.fit(X_tr, y_tr)
-                    preds = model.predict(X_te)
-                    latency_ms = (time.perf_counter() - t0) * 1000.0
+                y_tr = y_full[train_idx]
+                y_te = y_full[test_idx]
 
-                    ram_mb = get_rss_memory_mb()
-                    rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
-                    mae = float(mean_absolute_error(y_te, preds))
-                    r2 = float(r2_score(y_te, preds)) if len(y_te) > 1 else 0.0
+                model = model_fn(seed)
+                t0 = time.perf_counter()
+                model.fit(X_tr, y_tr)
+                preds = model.predict(X_te)
+                latency_ms = (time.perf_counter() - t0) * 1000.0
 
-                    error_rate = 0.0 if (
-                        latency_ms <= cfg["guardrails"]["max_latency_ms"]
-                        and ram_mb <= cfg["guardrails"]["max_ram_mb"]
-                        and not np.isnan(rmse)
-                    ) else 1.0
+                ram_mb = get_rss_memory_mb()
+                rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
+                mae = float(mean_absolute_error(y_te, preds))
+                r2 = float(r2_score(y_te, preds)) if len(y_te) > 1 else 0.0
 
-                    raw_records.append({
-                        "run_id": run_id,
-                        "phase": phase,
-                        "iteration": i,
-                        "model": model_name,
-                        "sample_size": int(n_samples),
-                        "RMSE": round(rmse, 4),
-                        "MAE": round(mae, 4),
-                        "R2": round(r2, 4),
-                        "latency_ms": round(latency_ms, 3),
-                        "ram_mb": round(ram_mb, 2),
-                        "error_rate": error_rate,
-                    })
-                    run_id += 1
+                error_rate = 0.0 if (
+                    latency_ms <= cfg["guardrails"]["max_latency_ms"]
+                    and ram_mb <= cfg["guardrails"]["max_ram_mb"]
+                    and not np.isnan(rmse)
+                ) else 1.0
 
-        out_jsonl = Path(cfg["paths"]["raw_jsonl"])
-        out_jsonl.parent.mkdir(parents=True, exist_ok=True)
-        with open(out_jsonl, "w", encoding="utf-8") as f:
-            for r in raw_records:
-                f.write(json.dumps(r) + "\n")
+                raw_records.append({
+                    "run_id": run_id,
+                    "phase": phase,
+                    "iteration": i,
+                    "model": model_name,
+                    "sample_size": int(n_samples),
+                    "RMSE": round(rmse, 4),
+                    "MAE": round(mae, 4),
+                    "R2": round(r2, 4),
+                    "latency_ms": round(latency_ms, 3),
+                    "ram_mb": round(ram_mb, 2),
+                    "error_rate": error_rate,
+                })
+                run_id += 1
 
-        print(f"Saved {len(raw_records)} benchmark records to {out_jsonl}")
-        return pd.DataFrame(raw_records)
+    out_jsonl = Path(cfg["paths"]["raw_jsonl"])
+    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_jsonl, "w", encoding="utf-8") as f:
+        for r in raw_records:
+            f.write(json.dumps(r) + "\n")
+
+    print(f"Saved {len(raw_records)} benchmark records to {out_jsonl}")
+    return pd.DataFrame(raw_records)
 
 
 if __name__ == "__main__":
