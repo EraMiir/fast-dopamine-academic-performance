@@ -80,7 +80,7 @@ The complete mathematical formalization of the loss functions ($\mathcal{L}_{\te
 ## 5. Results & Discussion
 ### 5.1. Summary Benchmark Table ($N = 256$ Full Workload, Cold-Start Warm-up Filtered)
 
-The table below reports the previously committed benchmark summary. The intended protocol is 3 warm-up runs and 20 evaluation repetitions per model and load level (240 evaluation runs total across 3 models and 4 load levels). After checking out this repair branch, rerun the commands in Section 6 to regenerate the raw logs, summary CSV, and figures. The existing committed CSV and figures are not outputs of the repaired script.
+**Historical results — not valid as results of the corrected pipeline.** These figures were produced before Ridge feature standardization was added and before the repaired benchmark was rerun. They are retained only as a record of the previous submission and must not be cited as updated results. The reproducible workflow on branch `fix/scaled-ridge-model-comparison` reruns the benchmark, regenerates the summary and figures, and uploads the outputs as a GitHub Actions artifact.
 
 All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, random_seed = 42).
 
@@ -97,7 +97,17 @@ All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evalu
 3. **Uncertainty:** confidence intervals and dispersion statistics are reported in the table above. Interval overlap should not be treated as a formal hypothesis test.
 4. **Runtime:** latency is reported in milliseconds. The median, 95th and 99th percentiles are shown above to make runtime variability visible.
 
-## 6. Quickstart & Reproducibility Guide
+## 6. Academic-only vs Full Model Comparison
+
+`src/compare_feature_sets.py` evaluates three regressors using identical 80/20 train-test splits across 30 reproducible repetitions. The Academic-only set uses age, study time, and attendance; the Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction. It writes run-level results to `data/processed/feature_set_comparison.csv` and aggregate results to `data/processed/feature_set_comparison_summary.csv`. This is a predictive comparison, not a causal analysis.
+
+Run it with:
+
+```bash
+python src/compare_feature_sets.py
+```
+
+## 7. Quickstart & Reproducibility Guide
 
 ```bash
 # 1. Install exact pinned dependencies
@@ -105,6 +115,9 @@ pip install -r requirements.txt
 
 # 2. Run benchmark on the full 256-row real survey dataset (or use --sample for the 10-row smoke test)
 python src/benchmark.py --config configs/config.yaml --full
+
+# Compare academic-only and full feature sets
+python src/compare_feature_sets.py
 
 # 3. Filter warm-up runs and compute 1,000-iteration bootstrap statistics (including p95 & p99)
 python src/process_data.py --config configs/config.yaml
@@ -124,7 +137,7 @@ python -m unittest test_benchmark -v
 ![Distribution Boxplot](reports/figures/fig2_distribution_boxplot.png)
 
 <!-- FEATURE_GPA_ANALYSIS_START -->
-## 7. Exploratory Feature–GPA Relationship Analysis
+## 8. Exploratory Feature–GPA Relationship Analysis
 
 Spearman rank correlation was used to examine monotonic associations between selected survey factors and GPA. Pearson correlation is also reported as a supplementary measure. 95% confidence intervals for Spearman's rho were estimated using 2,000 bootstrap resamples (random seed = 42).
 
