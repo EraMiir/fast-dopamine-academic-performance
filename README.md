@@ -29,6 +29,9 @@ This repository contains the end-to-end benchmarking, statistical aggregation, a
 
 ```text
 fast-dopamine-academic-performance/
+├── .github/
+│   └── workflows/
+│       └── reproducible-experiments.yml
 ├── configs/
 │   └── config.yaml
 ├── data/
@@ -37,8 +40,8 @@ fast-dopamine-academic-performance/
 │   │   └── test_run.jsonl
 │   ├── processed/
 │   │   ├── feature_gpa_correlations.csv
-│   ├── feature_set_comparison_summary.csv
-│   └── metrics_summary.csv
+│   │   ├── feature_set_comparison_summary.csv
+│   │   └── metrics_summary.csv
 │   ├── sample/
 │   │   └── sample_survey.csv
 │   └── cleaned_survey.csv
@@ -55,9 +58,6 @@ fast-dopamine-academic-performance/
 │       ├── fig1_latency_vs_load.png
 │       ├── fig2_distribution_boxplot.pdf
 │       └── fig2_distribution_boxplot.png
-├── .github/
-│   └── workflows/
-│       └── reproducible-experiments.yml
 ├── src/
 │   ├── analyze_relationships.py
 │   ├── benchmark.py
