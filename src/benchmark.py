@@ -264,10 +264,10 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
                 phase = "warmup" if i < warmup_runs else "evaluation"
                 seed = base_seed + i * 7 + int(n_samples)
                 train_idx, test_idx = sample_train_test_indices(
-                n_rows=len(df),
-                n_samples=int(n_samples),
-                test_size=float(cfg["test_size"]),
-                seed=seed,
+                    n_rows=len(df),
+                    n_samples=int(n_samples),
+                    test_size=float(cfg["test_size"]),
+                    seed=seed,
                 )
 
                 X_tr = X_full[train_idx]
@@ -290,7 +290,7 @@ def run_benchmark(config_path: str = "configs/config.yaml", use_full: bool = Tru
                 error_rate = 0.0 if (
                     latency_ms <= cfg["guardrails"]["max_latency_ms"]
                     and ram_mb <= cfg["guardrails"]["max_ram_mb"]
-                    and not np.isnan(rmse)
+                    and np.isfinite(rmse)
                 ) else 1.0
 
                 raw_records.append({
