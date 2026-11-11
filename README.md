@@ -23,7 +23,7 @@ This repository contains the end-to-end benchmarking, statistical aggregation, a
 |StudyH|**3/4h**, **2 hrs**, **30 mins**|Extracted the time, minutes /60, ranges to average|
 |Attend|**85%**, **0.9**, **90**|Converted to a fraction between 0 and 1|
 |SM_hours|**less than 2**, **3-4 hours**, **20%**|Same as for StudyH|
-|GPA|**4.0 and 5.0 scales**, **letters (A, B+, etc.)**|Letter grades are mapped to fixed 4.0-scale values. Numeric values above 4.0 and up to 5.0 are converted using coarse bands (4.5–5.0 → 4.0; 3.5–<4.5 → 3.0; 2.5–<3.5 → 2.0; 0–<2.5 → 0.0). Unrecognized values are removed. This is an approximate harmonization, not a proportional conversion.|
+|GPA|**4.0 and 5.0 scales**, **letters (A, B+, etc.)**|Letter grades are mapped to fixed 4.0-scale values. Numeric values from 0.0 to 4.0 are kept unchanged. Values above 4.0 and below 4.5 are mapped to 3.0; values from 4.5 to 5.0 are mapped to 4.0. Other unrecognized values are removed. This is an approximate harmonization, not a proportional conversion.|
 
 ## 2. Final Repository Directory Structure
 
