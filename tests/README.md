@@ -1,3 +1,3 @@
 # Tests
 
-Run the unit tests from the repository root with `python -m unittest discover -s tests -v`.
+Run the root-level benchmark helper tests from the repository root with `python -m unittest test_benchmark -v`.
