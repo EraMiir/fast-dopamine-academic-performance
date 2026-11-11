@@ -109,6 +109,9 @@ python src/process_data.py --config configs/config.yaml
 
 # 4. Generate publication-ready PDF and 300 DPI PNG figures in reports/figures/
 python src/visualize.py --config configs/config.yaml
+
+# 5. Run the benchmark helper unit tests
+python -m unittest test_benchmark -v
 ```
 
 
