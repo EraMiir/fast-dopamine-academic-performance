@@ -6,6 +6,8 @@ from pathlib import Path
 import pandas as pd
 
 from src.benchmark import ensure_dataset, build_models
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 
 class TestEnsureDataset(unittest.TestCase):
@@ -52,6 +54,11 @@ class TestBuildModels(unittest.TestCase):
         for model in models.values():
             self.assertTrue(hasattr(model, "fit"))
             self.assertTrue(hasattr(model, "predict"))
+
+    def test_ridge_uses_standard_scaler(self):
+        models = build_models({}, seed=42)
+        self.assertIsInstance(models["Ridge"], Pipeline)
+        self.assertIsInstance(models["Ridge"].named_steps["scaler"], StandardScaler)
 
 
 if __name__ == "__main__":
