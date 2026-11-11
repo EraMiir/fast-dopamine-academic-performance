@@ -107,7 +107,7 @@ In this repeated holdout comparison, adding the social-media and psychometric va
 
 ## 6. Academic-only vs Full Model Comparison — Method
 
-`src/compare_feature_sets.py` evaluates three regressors using identical 80/20 train-test splits across 30 reproducible repetitions. The Academic-only set uses age, study time, and attendance; the Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction. It writes run-level results to `data/processed/feature_set_comparison.csv` and aggregate results to `data/processed/feature_set_comparison_summary.csv`. The current run-level and summary outputs are committed in `data/processed/`. This is a predictive comparison, not a causal analysis.
+`src/compare_feature_sets.py` evaluates three regressors using identical 80/20 train-test splits across 30 reproducible repetitions. The Academic-only set uses age, study time, and attendance; the Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction. It writes run-level results to `data/processed/feature_set_comparison.csv` and aggregate results to `data/processed/feature_set_comparison_summary.csv`. The aggregate comparison table is committed in `data/processed/feature_set_comparison_summary.csv`. The full run-level comparison and regenerated benchmark figures are available in the successful GitHub Actions artifact linked below. This is a predictive comparison, not a causal analysis.
 
 Run it with:
 
@@ -140,9 +140,7 @@ python -m unittest test_benchmark -v
 
 ## Scientific Visualizations
 
-![Latency vs Load](reports/figures/fig1_latency_vs_load.png)
-
-![Distribution Boxplot](reports/figures/fig2_distribution_boxplot.png)
+The corrected experiment regenerates both figures in PDF and 300-DPI PNG formats. Download the **reproducible-experiment-results** artifact from the successful [GitHub Actions run](https://github.com/EraMiir/fast-dopamine-academic-performance/actions/runs/42986469252) to view the figures produced by the corrected benchmark. The previously committed images are not presented here as current results.
 
 <!-- FEATURE_GPA_ANALYSIS_START -->
 ## 8. Exploratory Feature–GPA Relationship Analysis
