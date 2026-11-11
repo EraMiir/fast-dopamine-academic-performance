@@ -78,28 +78,36 @@ fast-dopamine-academic-performance/
 The complete mathematical formalization of the loss functions ($\mathcal{L}_{\text{Ridge}}, \mathcal{L}_{\text{GBR}}$), target metrics ($\text{RMSE}, \text{MAE}$), non-parametric bootstrap 95% confidence intervals, and the C4 Component Telemetry Diagram are documented in docs/domain_model.md.
 
 ## 5. Results & Discussion
-### 5.1. Summary Benchmark Table ($N = 256$ Full Workload, Cold-Start Warm-up Filtered)
+### 5.1. Benchmark Results at the Full Workload (N = 256)
 
-**Historical results — not valid as results of the corrected pipeline.** These figures were produced before Ridge feature standardization was added and before the repaired benchmark was rerun. They are retained only as a record of the previous submission and must not be cited as updated results. The reproducible workflow on branch `fix/scaled-ridge-model-comparison` reruns the benchmark, regenerates the summary and figures, and uploads the outputs as a GitHub Actions artifact.
+The corrected benchmark was run on the committed cleaned survey dataset. For each model and workload level, the pipeline used 3 warm-up runs followed by 20 evaluation runs. The table below reports the 20 evaluation runs at the full workload of 256 observations. Latency includes model training and prediction.
 
-All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, random_seed = 42).
+|Model|RMSE Mean ± SD|MAE Mean ± SD|RMSE 95% bootstrap CI|Median latency|Mean RAM|Error rate|
+|---|---:|---:|---:|---:|---:|---:|
+|Standardized Ridge Regression|0.3434 ± 0.0248|0.2744 ± 0.0237|[0.3321, 0.3545]|1.085 ms|160.66 MB|0.0%|
+|Random Forest|0.3511 ± 0.0252|0.2875 ± 0.0221|[0.3400, 0.3625]|90.311 ms|161.93 MB|0.0%|
+|Gradient Boosting|0.3575 ± 0.0299|0.2871 ± 0.0256|[0.3449, 0.3701]|48.400 ms|163.23 MB|0.0%|
 
-|Model / Method|RMSE Mean ± SD|RMSE Median (p25–p75)|RMSE 95% CI|RMSE p95 / p99|MAE Mean ± SD|Latency Median (p95 / p99)|Error Rate|
-|---|---:|---:|---:|---:|---:|---:|---:|
-|Baseline: Ridge Regression|0.3338 ± 0.0245|0.3335 (0.3129–0.3500)|[0.3233, 0.3442]|0.3731 / 0.3766|0.2677 ± 0.0206|1.07 ms (1.49 / 1.60 ms)|0.0%|
-|Gradient Boosting Regressor|0.2918 ± 0.0278|0.2919 (0.2850–0.3043)|[0.2793, 0.3038]|0.3402 / 0.3425|0.2192 ± 0.0218|80.64 ms (94.74 / 96.93 ms)|0.0%|
-|Random Forest Regressor|0.2866 ± 0.0220|0.2926 (0.2735–0.3009)|[0.2771, 0.2956]|0.3153 / 0.3160|0.2221 ± 0.0172|173.45 ms (186.63 / 187.36 ms)|0.0%|
+Ridge has the lowest mean RMSE and MAE at N = 256 and is also the fastest model in this experiment. The two ensemble models did not outperform the standardized Ridge baseline on this dataset. All three models remained within the configured latency and memory guardrails during the recorded evaluation runs.
 
-### 5.2. Key Findings & Methodological Notes
+### 5.2. Academic-only vs Full Model
 
-1. **Prediction accuracy:** the lowest mean RMSE at sample size 256 is achieved by **Random Forest Regressor** (0.2866 GPA points; 95% bootstrap CI [0.2771, 0.2956]).
-2. **Comparison with baseline:** the reduction in mean RMSE relative to Ridge is 14.1%.
-3. **Uncertainty:** confidence intervals and dispersion statistics are reported in the table above. Interval overlap should not be treated as a formal hypothesis test.
-4. **Runtime:** latency is reported in milliseconds. The median, 95th and 99th percentiles are shown above to make runtime variability visible.
+The second experiment used the same 30 reproducible 80/20 train-test splits for both feature sets. Academic-only contains age, study time, and attendance. Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction.
 
-## 6. Academic-only vs Full Model Comparison
+|Model|Feature set|RMSE Mean ± SD|MAE Mean ± SD|R² Mean|
+|---|---|---:|---:|---:|
+|Ridge|Academic-only|0.3393 ± 0.0253|0.2760 ± 0.0224|0.1207|
+|Ridge|Full Model|0.3469 ± 0.0277|0.2800 ± 0.0248|0.0801|
+|Random Forest|Academic-only|0.3524 ± 0.0228|0.2857 ± 0.0182|0.0501|
+|Random Forest|Full Model|0.3545 ± 0.0239|0.2913 ± 0.0203|0.0404|
+|Gradient Boosting|Academic-only|0.3582 ± 0.0238|0.2868 ± 0.0185|0.0173|
+|Gradient Boosting|Full Model|0.3610 ± 0.0248|0.2903 ± 0.0217|0.0014|
 
-`src/compare_feature_sets.py` evaluates three regressors using identical 80/20 train-test splits across 30 reproducible repetitions. The Academic-only set uses age, study time, and attendance; the Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction. It writes run-level results to `data/processed/feature_set_comparison.csv` and aggregate results to `data/processed/feature_set_comparison_summary.csv`. This is a predictive comparison, not a causal analysis.
+In this repeated holdout comparison, adding the social-media and psychometric variables did not improve average prediction metrics for any of the three models. This does not prove that these factors are unrelated to GPA. It means that, with this dataset, feature set, and evaluation procedure, the additional variables did not provide better out-of-sample predictions. The low average R² values also indicate that the models explain only a limited part of GPA variation; predictive performance should therefore be described as modest rather than strong.
+
+## 6. Academic-only vs Full Model Comparison — Method
+
+`src/compare_feature_sets.py` evaluates three regressors using identical 80/20 train-test splits across 30 reproducible repetitions. The Academic-only set uses age, study time, and attendance; the Full Model adds social-media time, sleep disturbance, mood modification, anxiety, depression, self-esteem, and academic social-media distraction. It writes run-level results to `data/processed/feature_set_comparison.csv` and aggregate results to `data/processed/feature_set_comparison_summary.csv`. The current run-level and summary outputs are committed in `data/processed/`. This is a predictive comparison, not a causal analysis.
 
 Run it with:
 
