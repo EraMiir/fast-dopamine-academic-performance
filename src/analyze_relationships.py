@@ -44,6 +44,11 @@ def bootstrap_spearman_ci(x, y, iterations=BOOTSTRAP_ITERATIONS, seed=SEED):
     return tuple(np.quantile(values, [0.025, 0.975]))
 
 
+def format_p_value(value):
+    """Avoid displaying very small p-values as 0.0000."""
+    return "<0.0001" if value < 0.0001 else f"{value:.4f}"
+
+
 def main():
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Dataset not found: {DATA_PATH}")
@@ -121,7 +126,7 @@ def main():
             f"| {row['factor']} | {row['n']} | "
             f"{row['spearman_rho']:.3f} | "
             f"[{row['spearman_ci95_low']:.3f}, {row['spearman_ci95_high']:.3f}] | "
-            f"{row['spearman_p_value']:.4f} | "
+            f"{format_p_value(row['spearman_p_value'])} | "
             f"{row['pearson_r']:.3f} | {row['direction']} |"
         )
 
