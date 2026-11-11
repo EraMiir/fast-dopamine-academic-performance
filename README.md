@@ -11,7 +11,7 @@
 This repository contains the end-to-end benchmarking, statistical aggregation, and scientific visualization pipeline evaluating machine learning models that predict student academic performance (`Last Academic Result (GPA/CGPA)`) from behavioral social media ("fast dopamine") metrics and psychometric indicators ($N = 256$ survey responses).
 
 * **RQ1:** To what extent do non-linear ensemble machine learning models (`RandomForestRegressor`, `GradientBoostingRegressor`) reduce the prediction error ($\text{RMSE}$, $\text{MAE}$) of student GPA compared to a linear baseline (`Ridge Regression`) when incorporating social media distraction and psychometric indicators?
-* **RQ2:** How do non-linear interactions between late-night social media usage, academic distraction, and sleep disturbance impact GPA prediction accuracy while controlling for study time and attendance rate?
+* **RQ2 (exploratory):** Which selected survey factors show monotonic associations with GPA? The current analysis reports pairwise Spearman correlations; it does not estimate interaction effects or adjust associations jointly for study time and attendance.
 
 ---
 
@@ -23,7 +23,7 @@ This repository contains the end-to-end benchmarking, statistical aggregation, a
 |StudyH|**3/4h**, **2 hrs**, **30 mins**|Extracted the time, minutes /60, ranges to average|
 |Attend|**85%**, **0.9**, **90**|Converted to a fraction between 0 and 1|
 |SM_hours|**less than 2**, **3-4 hours**, **20%**|Same as for StudyH|
-|GPA|**4.0 and 5.0 scales**, **letters (A, B+, etc.)**|Everything on a 4.0 scale, Rows without a recognizable GPA have been removed|
+|GPA|**4.0 and 5.0 scales**, **letters (A, B+, etc.)**|Letter grades are mapped to fixed 4.0-scale values. Numeric values above 4.0 and up to 5.0 are converted using coarse bands (4.5–5.0 → 4.0; 3.5–<4.5 → 3.0; 2.5–<3.5 → 2.0; 0–<2.5 → 0.0). Unrecognized values are removed. This is an approximate harmonization, not a proportional conversion.|
 
 ## 2. Final Repository Directory Structure
 
@@ -80,6 +80,8 @@ The complete mathematical formalization of the loss functions ($\mathcal{L}_{\te
 ## 5. Results & Discussion
 ### 5.1. Summary Benchmark Table ($N = 256$ Full Workload, Cold-Start Warm-up Filtered)
 
+The table below reports the previously committed benchmark summary. The intended protocol is 3 warm-up runs and 20 evaluation repetitions per model and load level (240 evaluation runs total across 3 models and 4 load levels). After checking out this repair branch, rerun the commands in Section 6 to regenerate the raw logs, summary CSV, and figures. The existing committed CSV and figures are not outputs of the repaired script.
+
 All metrics are computed strictly on post-warmup evaluation runs ($n = 20$ evaluation repetitions per load level; $240$ total evaluation runs across $N \in \{64, 128, 192, 256\}$, np.random.seed(42)).
 
 |Model / Method|RMSE Mean ± SD|RMSE Median (p25–p75)|RMSE 95% CI|RMSE p95 / p99|MAE Mean ± SD|Latency Median (p95 / p99)|Error Rate|
@@ -109,6 +111,9 @@ python src/process_data.py --config configs/config.yaml
 
 # 4. Generate publication-ready PDF and 300 DPI PNG figures in reports/figures/
 python src/visualize.py --config configs/config.yaml
+
+# 5. Run the benchmark helper unit tests
+python -m unittest test_benchmark -v
 ```
 
 
@@ -133,7 +138,7 @@ Spearman rank correlation was used to examine monotonic associations between sel
 
 **Interpretation:** Positive coefficients indicate that higher factor values tend to occur with higher GPA; negative coefficients indicate that higher factor values tend to occur with lower GPA. Coefficients near zero indicate weak monotonic association.
 
-**Important limitation:** These are observational correlations, not evidence of causation. They do not establish that a factor causes GPA to increase or decrease. Statistical significance should be interpreted cautiously because several factors are examined.
+**Important limitation:** These are observational, pairwise correlations, not evidence of causation. They do not test nonlinear interactions and do not control simultaneously for study time and attendance. Statistical significance should be interpreted cautiously because several factors are examined.
 
 Full results: `data/processed/feature_gpa_correlations.csv`.
 <!-- FEATURE_GPA_ANALYSIS_END -->
